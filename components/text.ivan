@@ -1,2 +1,2 @@
-export Text: p
+component Text: p
   color: white;
