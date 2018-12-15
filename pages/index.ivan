@@ -1,9 +1,6 @@
 component Main: div
   background-color: lightblue;
 
-component Text: p
-  color: white;
-
 head
   title: Gustav's website
 
