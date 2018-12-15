@@ -32,26 +32,29 @@ And is compiled to this:
 
 ```html
 <!DOCTYPE html>
+<html>
 
 <head>
   <title>Gustav's website</title>
   <style>
-    .Main_tpQCw1DsDC {
-      background-color: blue;
+    .Main_xs3zk_G30B {
+      background-color: lightblue;
     }
 
-    .Text_xytRgN2OP8 {
+    .Text_9I5KnvXME_ {
       color: white;
     }
   </style>
 </head>
 
 <body>
-  <div id="main" class="Main_tpQCw1DsDC">
-    <p class="Text_xytRgN2OP8">I'm some text</p>
-    <p class="Text_xytRgN2OP8">I'm some other text</p>
+  <div id="main" class="Main_xs3zk_G30B">
+    <p class="Text_9I5KnvXME_">I'm some text</p>
+    <p class="Text_9I5KnvXME_">I'm some other text</p><a href="about.html">Go to about page</a>
   </div>
 </body>
+
+</html>
 ```
 
 The next thing I'm working on, is importing code in files (to support code reuseability) and also embedding scripts (to be executed in client).

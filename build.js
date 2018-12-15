@@ -146,12 +146,12 @@ const createMarkup = (raw) => {
 
   const componentIndex = components.reduce((acc, comp) => Object.assign(acc, { [comp.name]: comp }), {})
 
-  const markup = `<!DOCTYPE html>${
+  const markup = `<!DOCTYPE html><html>${
     [
       compileElementTree(headTree, componentIndex, stylesheet),
       compileElementTree(bodyTree, componentIndex)
     ].join('')
-  }`
+  }</html>`
 
   return markup
 }
