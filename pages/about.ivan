@@ -1,0 +1,10 @@
+component Main: div
+  background-color: blue;
+
+html
+  head
+    title: Gustav's website
+  body
+    Main
+      h1: About
+      p: Here's some text about me
