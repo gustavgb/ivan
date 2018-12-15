@@ -50,7 +50,7 @@ And is compiled to this:
 <body>
   <div id="main" class="Main_xs3zk_G30B">
     <p class="Text_9I5KnvXME_">I'm some text</p>
-    <p class="Text_9I5KnvXME_">I'm some other text</p><a href="about.html">Go to about page</a>
+    <p class="Text_9I5KnvXME_">I'm some other text</p>
   </div>
 </body>
 
