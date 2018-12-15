@@ -1,10 +1,13 @@
 component Main: div
   background-color: blue;
 
-html
-  head
-    title: Gustav's website
-  body
-    Main id="main"
-      p: I'm some text
-      p: I'm some other text
+component Text: p
+  color: white;
+
+head
+  title: Gustav's website
+
+body
+  Main id="main"
+    Text: I'm some text
+    Text: I'm some other text

@@ -1,6 +1,7 @@
 const glob = require('glob')
 const path = require('path')
 const fs = require('fs-extra')
+const createShortId = require('shortid')
 
 fs.emptyDirSync(path.join(__dirname, 'dist'))
 
@@ -8,8 +9,6 @@ glob('pages/*.ivan', {}, (err, files) => {
   if (err) {
     throw err
   }
-
-  console.log(files)
 
   processFiles(files)
 })
@@ -64,17 +63,17 @@ const deepenStructure = (lines) => {
 }
 
 const compileComponent = (component) => {
-  const styles = component.children.map(child => child.content).join('')
+  const styles = component.children.map(child => child.content)
   const command = component.content.replace(/^component /, '').replace(/ /gi, '').split(':')
   return {
     name: command[0],
     element: command[1],
-    className: command[0].toLowerCase(),
+    className: command[0] + '_' + createShortId(),
     styles
   }
 }
 
-const compileElementTree = (tree, components) => {
+const compileElementTree = (tree, components, inject = '') => {
   const split = tree.content.replace(': ', ':').split(':')
   const commandSplit = split[0].split(' ')
   const name = commandSplit[0]
@@ -94,10 +93,17 @@ const compileElementTree = (tree, components) => {
     body = ''
   }
 
-  return `<${el}${props.length ? ' ' + props.join(' ') : ''}>${body}</${el}>`
+  return `<${el}${props.length ? ' ' + props.join(' ') : ''}>${body}${inject}</${el}>`
 }
 
-const createElements = (raw) => {
+const compileStylesheet = (components) => {
+  const styles = components.map(comp => `.${comp.className} {
+  ${comp.styles.join('\n')}
+}\n`).join('')
+  return `<style>${styles}</style>`
+}
+
+const createMarkup = (raw) => {
   const lines = raw.split('\n').map(line => {
     let indent = 0
     for (let i = 0; i < line.length; i++) {
@@ -118,31 +124,43 @@ const createElements = (raw) => {
 
   const root = deepenStructure(lines)
 
-  const elementTrees = []
+  let headTree
+  let bodyTree
   const components = []
 
   root.forEach((element, index, list) => {
     if (/^component/.test(element.content)) {
       components.push(compileComponent(element))
-    } else {
-      elementTrees.push(element)
+    } else if (/^head/.test(element.content)) {
+      headTree = element
+    } else if (/^body/.test(element.content)) {
+      bodyTree = element
     }
   })
 
+  if (!headTree || !bodyTree) {
+    throw new Error('Must include head and body.')
+  }
+
+  const stylesheet = compileStylesheet(components)
+
   const componentIndex = components.reduce((acc, comp) => Object.assign(acc, { [comp.name]: comp }), {})
 
-  return { elementTrees, componentIndex }
+  const markup = `<!DOCTYPE html>${
+    [
+      compileElementTree(headTree, componentIndex, stylesheet),
+      compileElementTree(bodyTree, componentIndex)
+    ].join('')
+  }`
+
+  return markup
 }
 
 const processFiles = (files) => {
   files.forEach(file => {
     const content = fs.readFileSync(path.join(__dirname, file), 'utf8')
 
-    const { elementTrees, componentIndex } = createElements(content)
-
-    const markup = elementTrees.map(tree => compileElementTree(tree, componentIndex)).join('')
-
-    console.log(markup)
+    const markup = createMarkup(content)
 
     writeOutput(file, markup)
   })
@@ -153,7 +171,7 @@ const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace(
 const writeOutput = (sourceFileName, markup) => {
   const fileName = parseFileName(sourceFileName)
 
-  console.log('Saving ' + fileName)
+  console.log('Saving ' + fileName + '.html')
 
   fs.writeFileSync(path.join(__dirname, `dist/${fileName}.html`), markup, 'utf8')
 }
