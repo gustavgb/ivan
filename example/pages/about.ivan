@@ -1,4 +1,4 @@
-component Main: div
+style Main: div
   background-color: blue;
 
 head

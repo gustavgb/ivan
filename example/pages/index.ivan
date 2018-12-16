@@ -1,12 +1,13 @@
-component Main: div
+import style Main
+
+style Main: div
   background-color: lightblue;
 
-component Text: p
+style Text: p
   color: white;
 
 head
   title: Gustav's website
-
 body
   Main id="main"
     Text: I'm some text
