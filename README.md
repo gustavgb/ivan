@@ -120,7 +120,9 @@ Is compiled to:
 </head>
 
 <body>
-  <div id="main" class="MainAnRZvHtOn2"><Text>Index</Text><a href="/about">Go to about me</a></div>
+  <div id="main" class="MainAnRZvHtOn2">
+    <p class="TextEsTeUpUX_l">Index</p><a href="/about">Go to about me</a>
+  </div>
   <div>
     <p>Copyright 2018 Gustav B</p>
     <p><a href="/">https://gustavgb.github.io</a></p>
@@ -141,7 +143,7 @@ Is compiled to:
     * Paths don't matter
 
     * Export component names **are** important. These are the only identification for an exported file.
-    
+
 * Children are supported in layouts, using the *!children* keyword.
 
 * Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled.
