@@ -1,4 +1,7 @@
+style FooterWrapper: div
+
 export layout Footer: div
   p: Copyright 2018 Gustav B
+  !children
   p
     a href="/": https://gustavgb.github.io

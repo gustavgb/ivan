@@ -1,12 +1,14 @@
 import style Text
+import layout Footer
 
 style Main: div
   background-color: lightblue;
 
-head
-  title: Gustav's website
-body
-  Main id="main"
-    Text: I'm some text
-    Text: I'm some other text
-    a href="about.html": Go to about page
+page
+  head
+    title: Gustav's website
+  body
+    Main id="main"
+      Text: Index
+      a href="/about": Go to about me
+    Footer

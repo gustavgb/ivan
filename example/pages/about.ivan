@@ -1,9 +1,14 @@
-style Main: div
-  background-color: blue;
+import style Text
+import layout Footer
 
-head
-  title: Gustav's website
-body
-  Main
-    h1: About
-    p: Here's some text about me
+style Main: div
+  background-color: lightblue;
+
+page
+  head
+    title: Gustav's website
+  body
+    Main id="main"
+      Text: About me
+      a href="/": Go to home page
+    Footer
