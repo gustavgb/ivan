@@ -61,6 +61,6 @@ The next thing I'm working on, is importing code in files (to support code reuse
 
 ## Local development
 
-Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn build`
+Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn build --s example`.
 
 Feel free to take a look at the code.

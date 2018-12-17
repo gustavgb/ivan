@@ -1,0 +1,12 @@
+import style Text
+import layout Footer
+import style Main
+
+page
+  head
+    title: Gustav's website
+  body
+    Main id="main"
+      Text: About me
+      a href="/ ": Go to home page
+    Footer
