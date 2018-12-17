@@ -1,2 +1,2 @@
-style Text: p
+export style Text: p
   color: white;

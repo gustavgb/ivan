@@ -1,10 +1,7 @@
-import style Main
+import style Text
 
 style Main: div
   background-color: lightblue;
-
-style Text: p
-  color: white;
 
 head
   title: Gustav's website
