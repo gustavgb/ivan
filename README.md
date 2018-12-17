@@ -60,8 +60,6 @@ Importing and exporting files are also supported. Example:
 **/assembly/path/to/dir/footer.ivan**
 
 ```
-style FooterWrapper: div
-
 export layout Footer: div
   p: Copyright 2018 Gustav B
   !children
@@ -99,6 +97,37 @@ page
       Text: Index
       a href="/about": Go to about me
     Footer
+```
+
+Is compiled to:
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gustav's website</title>
+  <style>
+    .Text7yY1XrdJ5t {
+      color: white;
+      font-style: italic;
+    }
+
+    .MainAnRZvHtOn2 {
+      background-color: lightblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main" class="MainAnRZvHtOn2"><Text>Index</Text><a href="/about">Go to about me</a></div>
+  <div>
+    <p>Copyright 2018 Gustav B</p>
+    <p><a href="/">https://gustavgb.github.io</a></p>
+  </div>
+</body>
+
+</html>
 ```
 
 ### A few things to note about the language
