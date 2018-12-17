@@ -10,3 +10,4 @@ page
       Text: Index
       a href="/about": Go to about me
     Footer
+      p: Footer content
