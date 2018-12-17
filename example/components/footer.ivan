@@ -1,7 +1,8 @@
 layout LinkWrapper: p
-  !children
 
-export layout Footer: div
+layout FooterWrapper: div
+
+export layout Footer: FooterWrapper
   p: Copyright 2018 Gustav B
   !children
   LinkWrapper
