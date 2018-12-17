@@ -1,4 +1,4 @@
-export layout div
+export layout Footer: div
   p: Copyright 2018 Gustav B
   p
     a href="/": https://gustavgb.github.io
