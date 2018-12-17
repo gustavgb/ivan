@@ -1,31 +1,29 @@
 # ivan
 
-A simple templating language that compiles to static HTML, CSS and JS
+A simple templating language that compiles to static HTML, CSS (and JS, shortly)
 
 ## Why?
 
-I needed a simple templating language to create my website, and looked around, but was unsatisfied with the complexity of available options. I needed a language that satisfied all my needs, while being so simple that compiling only required one command and no setup. I wanted to be able to deploy my site on Github Pages, since it's easy and built into Github.
+I needed a simple templating language to create my website, and looked around, but was unsatisfied with the complexity of available options. I needed a language that satisfied all my needs, while being so simple that compiling only required one command and no setup. I wanted to be able to deploy my site on Github Pages, since it's easy and built into Github, which meant that I had to use a static site.
 
 ## How?
 
-**Ivan** is a simple templating language similar to HAML, but supports some cool features along the lines of CSS-in-JS (here: CSS-in-Ivan 😉). Currently not a lot of features are implemented, but I am working on it.
-
-A simple Ivan page looks like this:
+A simple Ivan page can look like this:
 
 ```
-component Main: div
+style Main: div
   background-color: blue;
 
-component Text: p
+style Text: p
   color: white;
 
-head
-  title: Gustav's website
-
-body
-  Main id="main"
-    Text: I'm some text
-    Text: I'm some other text
+page
+  head
+    title: Gustav's website
+  body
+    Main id="main"
+      Text: I'm some text
+      Text: I'm some other text
 ```
 
 And is compiled to this:
@@ -37,27 +35,89 @@ And is compiled to this:
 <head>
   <title>Gustav's website</title>
   <style>
-    .Main_xs3zk_G30B {
+    .Mainxs3zk_G30B {
       background-color: lightblue;
     }
 
-    .Text_9I5KnvXME_ {
+    .Text9I5KnvXME_ {
       color: white;
     }
   </style>
 </head>
 
 <body>
-  <div id="main" class="Main_xs3zk_G30B">
-    <p class="Text_9I5KnvXME_">I'm some text</p>
-    <p class="Text_9I5KnvXME_">I'm some other text</p>
+  <div id="main" class="Mainxs3zk_G30B">
+    <p class="Text9I5KnvXME_">I'm some text</p>
+    <p class="Text9I5KnvXME_">I'm some other text</p>
   </div>
 </body>
 
 </html>
 ```
 
-The next thing I'm working on, is importing code in files (to support code reuseability) and also embedding scripts (to be executed in client).
+Importing and exporting files are also supported. Example:
+
+**/assembly/path/to/dir/footer.ivan**
+
+```
+style FooterWrapper: div
+
+export layout Footer: div
+  p: Copyright 2018 Gustav B
+  !children
+  p
+    a href="/": https://gustavgb.github.io
+```
+
+**/assembly/path/to/dir/main.ivan**
+
+```
+export style Main: div
+  background-color: lightblue;
+```
+
+**/assembly/path/to/dir/text.ivan**
+
+```
+export style Text: p
+  color: white;
+  font-style: italic;
+```
+
+**/assembly/pages/index.ivan**
+
+```
+import style Text
+import layout Footer
+import style Main
+
+page
+  head
+    title: Gustav's website
+  body
+    Main id="main"
+      Text: Index
+      a href="/about": Go to about me
+    Footer
+```
+
+### A few things to note about the language
+
+* Files are scoped to themselves, so files don't share components and don't have to worry about naming comflicts. Except when using imports and exports.
+
+* Exports and imports feed to and are fed from a global pool of components. This means:
+
+    * Files names don't matter
+
+    * Paths don't matter
+
+    * Export component names **are** important. These are the only identification for an exported file.
+    
+* Children are supported in layouts, using the *!children* keyword.
+
+* Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled.
+
+* The language is compiled to HTML and CSS, so all html tags and attributes are supported along with css features are supported, as they are not compiled until runtime. This also means that the language (when compiled) is fully compatible with all browsers that support HTML and CSS. Note: If you use HTML or CSS features that require polyfills or transpilation to work, this language does not solve that.
 
 ## Local development
 
