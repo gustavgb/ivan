@@ -1,8 +1,6 @@
 import style Text
 import layout Footer
-
-style Main: div
-  background-color: lightblue;
+import style Main
 
 page
   head
@@ -10,5 +8,5 @@ page
   body
     Main id="main"
       Text: About me
-      a href="/": Go to home page
+      a href="/ ": Go to home page
     Footer
