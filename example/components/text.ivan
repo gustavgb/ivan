@@ -1,3 +1,4 @@
 export style Text: p
   color: white;
   font-style: italic;
+  margin: 0px;
