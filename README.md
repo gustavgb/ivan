@@ -152,6 +152,4 @@ Is compiled to:
 
 ## Local development
 
-Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn build --s example`.
-
-Feel free to take a look at the code.
+Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn workspace example-website build -s src`.
