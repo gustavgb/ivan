@@ -1,6 +1,17 @@
-export style Page: div
+import Footer
+import Head
+import Top
+
+style BodyWrapper: div
   width: 1100px
   margin: 0 auto
   padding: 20px
   background-color: white
   padding-bottom: 65px
+
+export layout Page
+  Head
+  body
+    Top
+    BodyWrapper: !children
+    Footer

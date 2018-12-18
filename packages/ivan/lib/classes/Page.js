@@ -13,14 +13,7 @@ class Page {
     const styleindex = {}
     const components = collectComponentIndex(this.file, globals)
 
-    let pageBody = this.children.map(child => {
-      const realChild = components[child.element] || child
-      if (realChild.element === 'head') {
-        return child.render(components, globals, styleindex, '!stylesheet')
-      } else {
-        return child.render(components, globals, styleindex)
-      }
-    }).join('')
+    let pageBody = this.children.map(child => child.render(components, globals, styleindex)).join('')
 
     const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('')
     const formattedStylesheet = formatStylesheet(stylesheet)
@@ -28,7 +21,7 @@ class Page {
 
     const stylesheetMarkup = `<style>\n${compiledStylesheet}</style>`
 
-    pageBody = pageBody.replace('!stylesheet', stylesheetMarkup)
+    pageBody = pageBody.replace('</head>', stylesheetMarkup + '</head>')
 
     const markup = `<!DOCTYPE html><html>${pageBody}${inject}</html>`
 

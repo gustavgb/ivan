@@ -28,6 +28,11 @@ class Layout {
     const tag = this.element
     const attrs = [].concat(this.defaultProps).concat(props).join(' ')
 
+    if (!tag) {
+      console.log('No tag')
+      return `${body}${inject}`
+    }
+
     return `<${tag}${attrs ? ' ' + attrs : ''}>${body}${inject}</${tag}>`
   }
 }
