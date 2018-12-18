@@ -1,9 +1,19 @@
-layout LinkWrapper: p
+style Clearfix: span
+  clear: both;
+  display: table;
 
-layout FooterWrapper: div
+style FooterWrapper: footer
+  background-color: #eee;
+  margin: 0 auto;
+  width: 1100px;
+  padding: 20px;
+
+style FooterItem: p
+  float: left;
+  padding-right: 20px;
 
 export layout Footer: FooterWrapper
-  p: Copyright 2018 Gustav B
-  !children
-  LinkWrapper
+  FooterItem: Copyright 2018 Gustav B
+  FooterItem
     a href="/": https://gustavgb.github.io
+  Clearfix
