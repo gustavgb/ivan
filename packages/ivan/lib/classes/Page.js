@@ -14,7 +14,8 @@ class Page {
     const components = collectComponentIndex(this.file, globals)
 
     let pageBody = this.children.map(child => {
-      if (child.element === 'head') {
+      const realChild = components[child.element] || child
+      if (realChild.element === 'head') {
         return child.render(components, globals, styleindex, '!stylesheet')
       } else {
         return child.render(components, globals, styleindex)

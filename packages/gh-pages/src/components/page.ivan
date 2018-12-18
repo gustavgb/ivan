@@ -1,0 +1,6 @@
+export style Page: div
+  width: 1100px
+  margin: 0 auto
+  padding: 20px
+  background-color: white
+  padding-bottom: 65px

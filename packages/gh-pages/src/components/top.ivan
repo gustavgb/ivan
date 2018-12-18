@@ -1,0 +1,42 @@
+style Wrapper: div
+  padding: 40px 20px
+  background-color: #cc8014
+  margin: 0 auto
+  width: 1100px
+
+style LogoWrapper: h1
+  font-size: 40px
+  text-transform: uppercase
+  font-family: Roboto Mono
+  margin: 0
+  color: white
+
+layout Logo: LogoWrapper
+
+style MenuWrapper: div
+  &:after
+    content: ""
+    clear: both
+    display: table
+
+  margin: 10px 0 0
+  padding: 0
+
+style MenuItem: a
+  float: left
+  list-style-type: none
+  margin-right: 20px
+  color: white
+  font-family: Arimo
+  text-decoration: none
+
+  &:visited
+    color: white
+
+layout Menu: MenuWrapper
+
+export layout Top: Wrapper
+  Logo: Ivan: A minimalist markup language
+  Menu
+    MenuItem href="/": Home
+    MenuItem href="/about": About

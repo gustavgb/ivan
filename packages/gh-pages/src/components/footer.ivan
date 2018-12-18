@@ -1,0 +1,26 @@
+style Text: p
+  margin: 0
+  display: inline
+
+style FooterWrapper: footer
+  background-color: #eee
+  margin: 0 auto
+  width: 1100px
+  padding: 25px 20px
+  font-size: 15px
+  height: 65px
+  position: absolute
+  bottom: 0
+  left: calc(50% - 550px)
+  text-align: center
+
+  &:after
+    content: ""
+    clear: both
+    display: table
+
+
+export layout Footer: FooterWrapper
+  Text: Find the source on
+  Text
+    a href="https://github.com/gustavgb/ivan": Github

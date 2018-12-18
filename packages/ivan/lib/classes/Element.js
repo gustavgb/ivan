@@ -40,7 +40,15 @@ class Element {
       const attrs = this.props.join(' ')
       const tag = this.element
 
-      const markup = `<${tag}${attrs ? ' ' + attrs : ''}>${body}${inject}</${tag}>`
+      const elementBody = `${body}${inject}`
+      let markup
+
+      if (elementBody) {
+        markup = `<${tag}${attrs ? ' ' + attrs : ''}>${elementBody}</${tag}>`
+      } else {
+        markup = `<${tag}${attrs ? ' ' + attrs : ''} />`
+      }
+
       return markup
     }
   }

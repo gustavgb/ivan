@@ -5,7 +5,7 @@ class Statement {
     this.lineContent = lineContent
 
     if (lineContent !== 'root') {
-      const split = lineContent.replace(/\s{2,}/gi, ' ').replace(/\s?:\s?/, ':').replace(':', '|').split('|')
+      const split = lineContent.replace(/\s{2,}/gi, ' ').replace(/\s:/, ':').replace(/:\s/, '!COMMANDBODYBREAK!').split('!COMMANDBODYBREAK!')
       const command = split[0]
       const body = split[1]
       const commandArgs = command.split(' ')
@@ -24,7 +24,7 @@ class Statement {
       return this
     }
 
-    const lineContent = this.commandArgs.slice(1).join(' ') + (this.commandBody ? ':' + this.commandBody : '')
+    const lineContent = this.commandArgs.slice(1).join(' ') + (this.commandBody ? ': ' + this.commandBody : '')
 
     return new Statement(this.indentation, lineContent, this.children)
   }

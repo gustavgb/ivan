@@ -1,0 +1,14 @@
+import DarkText: Text
+import Footer
+import Head
+import Top
+import Page
+
+page
+  Head
+  body
+    Top
+    Page
+      Text: About me
+      a href="/ ": Go to home page
+    Footer

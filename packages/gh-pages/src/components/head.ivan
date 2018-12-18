@@ -1,0 +1,14 @@
+inject GlobalStyle: style
+  html *
+    box-sizing: border-box;
+
+  body
+    margin: 0;
+    position: relative
+    min-height: 100vh
+
+export layout Head: head
+  title: Ivan: A minimalist markup language for the web
+  meta charset="utf-8"
+  link href="https://fonts.googleapis.com/css?family=Arimo|Poppins|Roboto+Mono" rel="stylesheet"
+  GlobalStyle
