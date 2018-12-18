@@ -1,6 +1,6 @@
 # ivan
 
-A simple markup language that compiles to static HTML, CSS (and JS, shortly)
+A simple markup language that compiles to static HTML, CSS and JS
 
 ## Why?
 
@@ -146,7 +146,7 @@ Is compiled to:
 
 * Children are supported in layouts, using the *!children* keyword.
 
-* Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled. Note that styling follows the sass [indented syntax](http://sass-lang.com/documentation/file.INDENTED_SYNTAX.html)
+* Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled. Note that styling follows the sass [indented syntax](http://sass-lang.com/documentation/file.INDENTED_SYNTAX.html).
 
 * The language is compiled to HTML and CSS, so all html tags and attributes are supported along with css features are supported, as they are not compiled until runtime. This also means that the language (when compiled) is fully compatible with all browsers that support HTML and CSS. Note: If you use HTML or CSS features that require polyfills or transpilation to work, this language does not solve that.
 
