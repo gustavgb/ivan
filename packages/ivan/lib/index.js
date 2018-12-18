@@ -3,12 +3,24 @@ const nodeWatch = require('node-watch')
 
 const compileWithTime = (sourceDir) => {
   const begin = Date.now()
-  compile(sourceDir)
+  compileCatchErrors(sourceDir)
+    .then(() => {
+      const delta = Date.now() - begin
 
-  const delta = Date.now() - begin
-
-  console.log('Compiled in ' + delta + 'ms')
+      console.log('Compiled in ' + delta + 'ms')
+    })
+    .catch(console.log)
 }
+
+const compileCatchErrors = (sourceDir) => new Promise((resolve, reject) => {
+  try {
+    compile(sourceDir)
+    resolve()
+  } catch (e) {
+    console.log('\n')
+    reject(e)
+  }
+})
 
 const main = (sourceDir, { watch = false }) => {
   let timeout = null
@@ -35,7 +47,7 @@ const main = (sourceDir, { watch = false }) => {
       }
     })
   } else {
-    compile(sourceDir)
+    compileCatchErrors(sourceDir).catch(console.log)
   }
 }
 
