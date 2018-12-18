@@ -33,7 +33,7 @@ const compile = (sourceDir) => {
   fs.emptyDirSync('dist')
 
   const pagePaths = []
-  const pagePrefix = new RegExp('^example/pages')
+  const pagePrefix = new RegExp(`^${sourceDir}/pages`)
 
   const filePaths = glob.sync(sourceDir + '/!(static)/**/*.ivan').filter(file => {
     if (pagePrefix.test(file)) {
