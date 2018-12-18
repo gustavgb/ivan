@@ -1,10 +1,10 @@
 # ivan
 
-A simple templating language that compiles to static HTML, CSS (and JS, shortly)
+A simple markup language that compiles to static HTML, CSS (and JS, shortly)
 
 ## Why?
 
-I needed a simple templating language to create my website, and looked around, but was unsatisfied with the complexity of available options. I needed a language that satisfied all my needs, while being so simple that compiling only required one command and no setup. I wanted to be able to deploy my site on Github Pages, since it's easy and built into Github, which meant that I had to use a static site.
+I needed a simple markup language to create my website, and looked around, but was unsatisfied with the complexity of available options. I needed a language that satisfied all my needs, while being so simple that compiling only required one command and no setup. I wanted to be able to deploy my site on Github Pages, since it's easy and built into Github, which meant that I had to use a static site.
 
 ## How?
 
@@ -146,10 +146,10 @@ Is compiled to:
 
 * Children are supported in layouts, using the *!children* keyword.
 
-* Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled.
+* Styling is added via. *style* componenets, which are rendered as children of *layouts*. If the style is not rendered, the styling is not compiled. Note that styling follows the sass [indented syntax](http://sass-lang.com/documentation/file.INDENTED_SYNTAX.html)
 
 * The language is compiled to HTML and CSS, so all html tags and attributes are supported along with css features are supported, as they are not compiled until runtime. This also means that the language (when compiled) is fully compatible with all browsers that support HTML and CSS. Note: If you use HTML or CSS features that require polyfills or transpilation to work, this language does not solve that.
 
 ## Local development
 
-Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn workspace example-website build -s src`.
+Clone this repo. Then, standing at the dir root, run `yarn` to install modules and then build the site using `yarn workspace example-website build`.
