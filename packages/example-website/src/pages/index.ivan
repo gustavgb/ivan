@@ -1,17 +1,15 @@
-import style Text
-import layout Footer
-import style Main
+import LightText: Text
+import Footer
+import Main
 
 inject GlobalStyle: style
-  html * {
+  html *
     box-sizing: border-box;
-  }
 
 inject GlobalStyleExtension: style
-  body {
+  body
     background-color: #efefde;
     margin: 0;
-  }
 
 inject Script type="application/javascript": script
   console.log('hello world!')

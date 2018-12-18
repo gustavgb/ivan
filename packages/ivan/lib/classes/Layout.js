@@ -1,4 +1,4 @@
-const { collectComponentIndex } = require('./../collectComponents')
+const collectComponentIndex = require('./../collectComponents')
 
 class Layout {
   constructor (name, element, props, children) {

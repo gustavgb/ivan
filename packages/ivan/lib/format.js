@@ -1,9 +1,7 @@
 const formatStylesheet = (stylesheet) => {
   return stylesheet
-    .replace(/\n/g, '')
-    .replace(/{/g, '{\n')
-    .replace(/}/g, '}\n\n')
-    .replace(/;/g, ';\n')
+    .replace(/\n{2,}/g, '\n')
+    .replace(/\n[^\s]/g, (match) => match.replace(/\n/, '\n\n'))
     .replace(/\n$/, '')
 }
 

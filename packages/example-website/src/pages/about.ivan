@@ -1,6 +1,6 @@
-import style Text
-import layout Footer
-import style Main
+import LightText: Text
+import Footer
+import Main
 
 page
   head

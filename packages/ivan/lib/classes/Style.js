@@ -19,6 +19,7 @@ class Style {
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
 
     const styles = this.children.map(child => child.renderRaw()).join('')
+
     stylesheet[this.className] = styles
 
     return `<${tag}${attrs ? ' ' + attrs : ''}>${childBody}</${tag}>`

@@ -1,7 +1,7 @@
 class Import {
-  constructor (type, name) {
-    this.type = type
+  constructor (name, mapTo) {
     this.name = name
+    this.mapTo = mapTo
 
     this.type = 'import'
   }

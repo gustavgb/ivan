@@ -1,5 +1,6 @@
-const { collectComponentIndex } = require('./../collectComponents')
+const collectComponentIndex = require('./../collectComponents')
 const { formatStylesheet } = require('./../format')
+const renderStylesheet = require('./../renderStylesheet')
 
 class Page {
   constructor (children) {
@@ -20,11 +21,13 @@ class Page {
       }
     }).join('')
 
-    const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key} {${styleindex[key]}}`]), []).join('')
+    const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('')
+    const formattedStylesheet = formatStylesheet(stylesheet)
+    const compiledStylesheet = renderStylesheet(formattedStylesheet)
 
-    const formattedStylesheet = `<style>\n${formatStylesheet(stylesheet)}</style>`
+    const stylesheetMarkup = `<style>\n${compiledStylesheet}</style>`
 
-    pageBody = pageBody.replace('!stylesheet', formattedStylesheet)
+    pageBody = pageBody.replace('!stylesheet', stylesheetMarkup)
 
     const markup = `<!DOCTYPE html><html>${pageBody}${inject}</html>`
 

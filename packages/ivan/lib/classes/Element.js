@@ -7,17 +7,17 @@ class Element {
     this.statement = statement
   }
 
-  renderRaw () {
+  renderRaw (indentationOffset = 0) {
     const line = this.statement.lineContent
 
     const indentation = []
-    for (let i = 0; i < this.statement.indentation; i++) {
+    for (let i = 0; i < this.statement.indentation + indentationOffset; i++) {
       indentation.push(' ')
     }
 
-    const children = Array.isArray(this.children) ? '\n' + indentation.join('') + this.children.map(child => child.renderRaw()).join('\n') : ''
+    const children = Array.isArray(this.children) ? '\n' + this.children.map(child => child.renderRaw(indentationOffset)).join('\n') : ''
 
-    return `${line}${children}`
+    return `${indentation.join('')}${line}${children}`
   }
 
   render (components, globals, stylesheet, inject = '') {

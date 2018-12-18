@@ -1,4 +1,9 @@
-export style Text: p
+export style LightText: p
   color: white;
+  font-style: italic;
+  margin: 0px;
+
+export style DarkText: p
+  color: black;
   font-style: italic;
   margin: 0px;

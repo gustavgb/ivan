@@ -1,19 +1,22 @@
-style Clearfix: span
-  clear: both;
-  display: table;
+import DarkText: Text
 
 style FooterWrapper: footer
-  background-color: #eee;
-  margin: 0 auto;
-  width: 1100px;
-  padding: 20px;
+  background-color: #eee
+  margin: 0 auto
+  width: 1100px
+  padding: 20px
 
-style FooterItem: p
-  float: left;
-  padding-right: 20px;
+  & > *
+    float: left
+    padding-right: 20px
+
+  &:after
+    content: ""
+    clear: both
+    display: table
+
 
 export layout Footer: FooterWrapper
-  FooterItem: Copyright 2018 Gustav B
-  FooterItem
+  Text: Copyright 2018 Gustav B
+  Text
     a href="/": https://gustavgb.github.io
-  Clearfix

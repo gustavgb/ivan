@@ -28,10 +28,9 @@ const handleCommand = (statement) => {
       return element
     }
     case 'import': {
-      const importType = commandArgs[1]
-      const importName = commandArgs[2]
+      const importName = commandArgs[1]
 
-      return new Import(importType, importName)
+      return new Import(importName, commandBody)
     }
     case 'inject': {
       const name = commandArgs[1]
