@@ -4,6 +4,8 @@
   "description": "An example of how ivan can be used",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "ivan watch",
+    "build": "ivan build",
     "start": "node tools/startDev.js"
   },
   "keywords": [],
@@ -11,6 +13,7 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "serve": "^10.1.1"
+    "serve": "^10.1.1",
+    "@gustavgb/ivan": "*"
   }
 }

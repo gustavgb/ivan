@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "build": "bin/compile.js",
-    "watch": "bin/compile.js --watch"
+    "ivan": "bin/ivan.js"
   },
   "repository": {
     "type": "git",
