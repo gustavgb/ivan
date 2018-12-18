@@ -85,9 +85,9 @@ export style Text: p
 **/assembly/pages/index.ivan**
 
 ```
-import style Text
-import layout Footer
-import style Main
+import Text
+import Footer
+import Main
 
 page
   head
