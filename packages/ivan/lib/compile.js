@@ -1,5 +1,7 @@
 const glob = require('glob')
 const fs = require('fs-extra')
+const prettier = require('prettier')
+
 const parseFile = require('./parseFile')
 const transpile = require('./transpile')
 const collectExports = require('./collectExports')
@@ -52,8 +54,9 @@ const compile = (sourceDir) => {
 
   pages.forEach(fileObj => {
     const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
+    const prettyMarkup = prettier.format(markup, { parser: 'html' })
 
-    writeOutput(fileObj.src, markup)
+    writeOutput(fileObj.src, prettyMarkup)
   })
 
   if (fs.pathExistsSync(sourceDir + '/static')) {
