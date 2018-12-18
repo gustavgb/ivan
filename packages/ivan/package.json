@@ -1,0 +1,35 @@
+{
+  "name": "@gustavgb/ivan",
+  "version": "0.0.1",
+  "description": "A simple templating language to create static websites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "build": "bin/compile.js",
+    "watch": "bin/compile.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustavgb/ivan.git"
+  },
+  "keywords": [
+    "templating",
+    "ivan",
+    "static",
+    "website"
+  ],
+  "author": "Gustav Burchardt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gustavgb/ivan/issues"
+  },
+  "homepage": "https://github.com/gustavgb/ivan#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.3",
+    "node-watch": "^0.5.9",
+    "shortid": "^2.2.14"
+  }
+}

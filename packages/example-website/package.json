@@ -1,0 +1,16 @@
+{
+  "name": "example-website",
+  "version": "0.0.1",
+  "description": "An example of how ivan can be used",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node tools/startDev.js"
+  },
+  "keywords": [],
+  "author": "Gustav Burchardt",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "serve": "^10.1.1"
+  }
+}

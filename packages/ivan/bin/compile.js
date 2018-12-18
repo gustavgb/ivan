@@ -1,6 +1,7 @@
+#! /usr/bin/env node
+
 const watch = require('node-watch')
 const compile = require('./compile.js')
-const loghandler = require('./loghandler.js')
 
 const flags = process.argv.join(' ').replace(/--/gi, '-').split('-').reduce((acc, flag) => {
   const key = flag.split(' ')[0]
@@ -51,6 +52,4 @@ if (mode === 'watch') {
   })
 } else {
   compile(sourceDir)
-
-  loghandler.writeLogs()
 }
