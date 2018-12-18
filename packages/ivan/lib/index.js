@@ -1,64 +1,42 @@
-const glob = require('glob')
-const fs = require('fs-extra')
-const parseFile = require('./parseFile')
-const transpile = require('./transpile')
-const collectExports = require('./collectExports')
+const compile = require('./compile')
+const nodeWatch = require('node-watch')
 
-const processFiles = (pages, components) => pages.map(file => {
-  const content = fs.readFileSync(file, 'utf8')
+const compileWithTime = (sourceDir) => {
+  const begin = Date.now()
+  compile(sourceDir)
 
-  const fileTree = parseFile(content)
+  const delta = Date.now() - begin
 
-  const transpiledFile = transpile(fileTree)
+  console.log('Compiled in ' + delta + 'ms')
+}
 
-  return { src: file, transpiledFile }
-})
+const main = (sourceDir, { watch = false }) => {
+  let timeout = null
+  let filesChanged = {}
 
-const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')
+  if (watch) {
+    console.log('Watching for file changes')
 
-const writeOutput = (sourceFileName, content, extension = '.html') => {
-  let fileName = parseFileName(sourceFileName)
+    compileWithTime(sourceDir)
 
-  console.log('Saving ' + fileName + extension)
+    nodeWatch('./' + sourceDir, { recursive: true }, (event, fileName) => {
+      filesChanged[fileName] = true
 
-  if (fileName !== 'index') {
-    fs.emptyDirSync('dist/' + fileName)
-    fs.writeFileSync(`dist/${fileName}/index${extension}`, content, 'utf8')
+      if (!timeout) {
+        timeout = setTimeout(() => {
+          timeout = null
+
+          console.log('\nFiles changed: \n  - ' + Object.keys(filesChanged).join('\n  - '))
+
+          filesChanged = {}
+
+          compileWithTime(sourceDir)
+        }, 300)
+      }
+    })
   } else {
-    fs.writeFileSync(`dist/${fileName}${extension}`, content, 'utf8')
+    compile(sourceDir)
   }
 }
 
-const compile = (sourceDir) => {
-  fs.emptyDirSync('dist')
-
-  const pagePaths = []
-  const pagePrefix = new RegExp(`^${sourceDir}/pages`)
-
-  const filePaths = glob.sync(sourceDir + '/!(static)/**/*.ivan').filter(file => {
-    if (pagePrefix.test(file)) {
-      pagePaths.push(file)
-      return false
-    }
-    return true
-  })
-
-  console.log('Compiling pages:\n  - ' + [].concat(filePaths, pagePaths).join('\n  - '))
-
-  const files = processFiles(filePaths)
-  const pages = processFiles(pagePaths)
-
-  const globals = collectExports(files)
-
-  pages.forEach(fileObj => {
-    const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
-
-    writeOutput(fileObj.src, markup)
-  })
-
-  if (fs.pathExistsSync(sourceDir + '/static')) {
-    fs.copySync(sourceDir + '/static', 'dist')
-  }
-}
-
-module.exports = compile
+module.exports = main
