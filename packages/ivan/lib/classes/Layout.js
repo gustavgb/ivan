@@ -1,4 +1,4 @@
-const { collectComponentIndex } = require('./../collectComponents.js')
+const { collectComponentIndex } = require('./../collectComponents')
 
 class Layout {
   constructor (name, element, props, children) {
@@ -11,7 +11,7 @@ class Layout {
     this.type = 'component'
   }
 
-  render (childBody, props, globals, stylesheet, inject = '') {
+  render (childBody = '', props, globals, stylesheet, inject = '') {
     const components = collectComponentIndex(this.file, globals)
 
     let body = this.children.map(child => child.element === '!children' ? child.element : child.render(components, globals, stylesheet)).join('').replace('!children', childBody)

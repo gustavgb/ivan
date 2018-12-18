@@ -1,4 +1,4 @@
-const Statement = require('./classes/Statement.js')
+const Statement = require('./classes/Statement')
 
 class Section {
   constructor (indent, content, parent = null) {

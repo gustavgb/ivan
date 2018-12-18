@@ -2,14 +2,26 @@ import style Text
 import layout Footer
 import style Main
 
-style Body: body
-  padding: 0;
-  margin: 0;
+inject GlobalStyle: style
+  html * {
+    box-sizing: border-box;
+  }
+
+inject GlobalStyleExtension: style
+  body {
+    background-color: #efefde;
+    margin: 0;
+  }
+
+inject Script type="application/javascript": script
+  console.log('hello world!')
 
 page
   head
     title: Gustav's website
-  Body
+    GlobalStyle: GlobalStyleExtension
+  body
+    Script
     Main id="main"
       Text: Index
       a href="/about": Go to about me

@@ -1,8 +1,8 @@
 const glob = require('glob')
 const fs = require('fs-extra')
-const parseFile = require('./parseFile.js')
-const transpile = require('./transpile.js')
-const collectExports = require('./collectExports.js')
+const parseFile = require('./parseFile')
+const transpile = require('./transpile')
+const collectExports = require('./collectExports')
 
 const processFiles = (pages, components) => pages.map(file => {
   const content = fs.readFileSync(file, 'utf8')

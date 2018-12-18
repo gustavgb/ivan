@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const watch = require('node-watch')
-const compile = require('./../lib/compile.js')
+const compile = require('./../lib/index')
 
 const flags = process.argv.slice(3).join(' ').replace(/--/gi, '-').split('-').reduce((acc, flag) => {
   const key = flag.split(' ')[0]

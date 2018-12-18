@@ -1,14 +1,17 @@
-const Statement = require('./classes/Statement.js')
-const Import = require('./classes/Import.js')
-const Style = require('./classes/Style.js')
-const Layout = require('./classes/Layout.js')
-const Page = require('./classes/Page.js')
-const Element = require('./classes/Element.js')
+const Statement = require('./classes/Statement')
+const Import = require('./classes/Import')
+const Style = require('./classes/Style')
+const Layout = require('./classes/Layout')
+const Page = require('./classes/Page')
+const Element = require('./classes/Element')
+const Inject = require('./classes/Inject')
 
 const mapChild = (child) => new Element(
   child.commandArgs[0],
   child.commandArgs.slice(1),
-  child.commandBody || child.children.map(mapChild)
+  child.commandBody,
+  child.children.map(mapChild),
+  child
 )
 
 const handleCommand = (statement) => {
@@ -30,10 +33,17 @@ const handleCommand = (statement) => {
 
       return new Import(importType, importName)
     }
+    case 'inject': {
+      const name = commandArgs[1]
+      const props = commandArgs.slice(2)
+
+      return new Inject(name, commandBody, props, children)
+    }
     case 'style': {
       const componentName = commandArgs[1]
+      const props = commandArgs.slice(2)
 
-      return new Style(componentName, commandBody, children)
+      return new Style(componentName, commandBody, props, children)
     }
     case 'layout': {
       const name = commandArgs[1]

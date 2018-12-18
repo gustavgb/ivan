@@ -2,6 +2,7 @@ class Statement {
   constructor (indentation, lineContent, children) {
     this.isRoot = false
     this.indentation = indentation
+    this.lineContent = lineContent
 
     if (lineContent !== 'root') {
       const split = lineContent.replace(/\s{2,}/gi, ' ').replace(/\s?:\s?/, ':').replace(':', '|').split('|')
