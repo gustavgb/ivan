@@ -3,10 +3,14 @@
 const watch = require('node-watch')
 const compile = require('./../lib/compile.js')
 
-const flags = process.argv.slice(2).join(' ').replace(/--/gi, '-').split('-').reduce((acc, flag) => {
+const flags = process.argv.slice(3).join(' ').replace(/--/gi, '-').split('-').reduce((acc, flag) => {
   const key = flag.split(' ')[0]
   const value = flag.split(' ')[1] || true
-  return Object.assign(acc, { [key]: value })
+  if (key) {
+    return Object.assign(acc, { [key]: value })
+  } else {
+    return acc
+  }
 }, {})
 
 if (!flags.s) {
@@ -15,8 +19,7 @@ if (!flags.s) {
 }
 
 const sourceDir = flags.s.replace(/\/$/gi, '')
-
-const mode = process.argv[1]
+const mode = process.argv[2]
 
 const compileWithTime = () => {
   const begin = Date.now()
