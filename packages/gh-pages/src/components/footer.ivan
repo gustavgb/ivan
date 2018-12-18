@@ -19,7 +19,6 @@ style FooterWrapper: footer
     clear: both
     display: table
 
-
 export layout Footer: FooterWrapper
   Text: Find the source on
   Text
