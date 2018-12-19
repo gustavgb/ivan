@@ -6,6 +6,7 @@ inject GlobalStyle: style
     margin: 0;
     position: relative
     min-height: 100vh
+    background-color:	#f9f9f9
 
   html
     font-size: 62.5%

@@ -14,7 +14,8 @@ class Page {
 
     let pageBody = this.children.map(child => child.render(components, globals, styleindex)).join('')
 
-    const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('')
+    const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('\n')
+
     const compiledStylesheet = renderStylesheet(stylesheet)
 
     const stylesheetMarkup = `<style>\n${compiledStylesheet}</style>`

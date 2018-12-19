@@ -7,7 +7,6 @@ style BodyWrapper: div
   MixinWidth
   margin: 0 auto
   padding: 2rem 0
-  background-color: white
   padding-bottom: 6.5rem
 
 export layout Page

@@ -2,6 +2,7 @@ style TextBase
   font-size: 1.8rem
   margin: 0
   line-height: 2.4rem
+  margin-bottom: 2rem
 
 export style LightText: p
   color: white

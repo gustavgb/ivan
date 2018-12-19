@@ -1,6 +1,7 @@
 import DarkText: Text
 import Page
 import Title
+import BulletList
 
 page
   Page
@@ -8,6 +9,15 @@ page
     Text
       : IVAN is a modern markup language for the web.
       : With IVAN you can create webpages with ease, while maintaining a structured workspace.
-      : IVAN supports many features that are only found in large web frameworks such as React.
+      : IVAN supports many features that are found in large web frameworks such as React.
       : But such frameworks require cumbersome compiling frameworks and transpilers.
       : They are built with client side execution in mind and lacks the simplicity of vanilla web development.
+    Text
+      : IVAN is a declarative language and is build on the principles of simplicity reuseability.
+      : Features include:
+    BulletList
+      li: Code reuseability using modules
+      li: Render to HTML, CSS and JS as a static site
+      li: Style components. Declare sass styling within any file and render it as an element
+      li: Style mixins. Extend any style components using reuseable style snippets
+      li: Code injection. Write scripts and global styles within any file and render it as an element

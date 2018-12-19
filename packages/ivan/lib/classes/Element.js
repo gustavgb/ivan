@@ -8,7 +8,7 @@ class Element {
     this.statement = statement
   }
 
-  renderRaw (indentationOffset = 0) {
+  renderRaw (indentationOffset = 0, childRenderer) {
     const line = this.statement.lineContent
 
     const indentation = []
@@ -16,7 +16,14 @@ class Element {
       indentation.push(' ')
     }
 
-    const children = Array.isArray(this.children) ? '\n' + this.children.map(child => child.renderRaw(indentationOffset)).join('\n') : ''
+    let children = ''
+    if (Array.isArray(this.children)) {
+      if (childRenderer) {
+        children = '\n' + this.children.map(childRenderer).join('\n')
+      } else {
+        children = '\n' + this.children.map(child => child.renderRaw(indentationOffset)).join('\n')
+      }
+    }
 
     return `${indentation.join('')}${line}${children}`
   }

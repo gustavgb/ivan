@@ -15,16 +15,18 @@ class Style {
     this.type = 'component'
   }
 
+  renderChild (child, components, globals) {
+    if (components[child.element] instanceof Style) {
+      return components[child.element].renderStyles(globals)
+    } else {
+      return child.renderRaw(0, grandchild => this.renderChild(grandchild, components, globals))
+    }
+  }
+
   renderStyles (globals) {
     const components = collectComponentIndex(this.file, globals)
 
-    return this.children.map(child => {
-      if (components[child.element] instanceof Style) {
-        return components[child.element].renderStyles(globals)
-      } else {
-        return child.renderRaw()
-      }
-    }).join('')
+    return this.children.map(child => this.renderChild(child, components, globals)).join('\n')
   }
 
   render (childBody, props, globals, stylesheet) {
