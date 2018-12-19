@@ -1,13 +1,14 @@
 import Footer
 import Head
 import Top
+import MixinWidth
 
 style BodyWrapper: div
-  width: 1100px
+  MixinWidth
   margin: 0 auto
-  padding: 20px
+  padding: 2rem 0
   background-color: white
-  padding-bottom: 65px
+  padding-bottom: 6.5rem
 
 export layout Page
   Head

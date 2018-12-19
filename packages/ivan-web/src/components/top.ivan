@@ -1,23 +1,37 @@
-style Wrapper: div
-  padding: 40px 20px
-  background-color: #cc8014
-  margin: 0 auto
-  width: 1100px
+import MixinClearfix
+import MixinWidth
 
-style LogoWrapper: h1
-  font-size: 40px
+style Wrapper: div
+  margin: 0 auto
+  padding: 6rem 0 4rem
+
+  MixinWidth
+  MixinClearfix
+
+style Line: div
+  margin-top: 4rem
+  border-bottom: 0.25rem solid #ddd
+  float: left
+  width: 300px
+
+style LogoText: h1
+  font-size: 4rem
   text-transform: uppercase
   font-family: Roboto Mono
   margin: 0
-  color: white
+  color: black
+  display: inline
 
-layout Logo: LogoWrapper
+style LogoByline: h4
+  font-size: 2rem
+  text-transform: uppercase
+  font-family: Roboto Mono
+  margin: 0
+  color: black
+  display: inline
 
-style MenuWrapper: div
-  &:after
-    content: ""
-    clear: both
-    display: table
+style Menu: div
+  MixinClearfix
 
   margin: 10px 0 0
   padding: 0
@@ -25,18 +39,20 @@ style MenuWrapper: div
 style MenuItem: a
   float: left
   list-style-type: none
-  margin-right: 20px
-  color: white
+  margin-right: 2rem
+  color: black
   font-family: Arimo
   text-decoration: none
+  font-size: 1.4rem
 
   &:visited
-    color: white
-
-layout Menu: MenuWrapper
+    color: black
 
 export layout Top: Wrapper
-  Logo: Ivan: A minimalist markup language
+  LogoText
+    :IVAN
+    LogoByline: A minimalist markup language
   Menu
     MenuItem href="/": Home
     MenuItem href="/about": About
+  Line

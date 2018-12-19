@@ -1,6 +1,13 @@
 import DarkText: Text
 import Page
+import Title
 
 page
   Page
-    Text: Index
+    Title: What is IVAN?
+    Text
+      : IVAN is a modern markup language for the web.
+      : With IVAN you can create webpages with ease, while maintaining a structured workspace.
+      : IVAN supports many features that are only found in large web frameworks such as React.
+      : But such frameworks require cumbersome compiling frameworks and transpilers.
+      : They are built with client side execution in mind and lacks the simplicity of vanilla web development.

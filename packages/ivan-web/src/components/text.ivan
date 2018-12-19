@@ -1,9 +1,12 @@
+style TextBase
+  font-size: 1.8rem
+  margin: 0
+  line-height: 2.4rem
+
 export style LightText: p
-  color: white;
-  font-style: italic;
-  margin: 0px;
+  color: white
+  TextBase
 
 export style DarkText: p
-  color: black;
-  font-style: italic;
-  margin: 0px;
+  color: black
+  TextBase
