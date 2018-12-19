@@ -20,6 +20,6 @@ style FooterWrapper: footer
   MixinClearfix
 
 export layout Footer: FooterWrapper
-  Text: Find the source on 
+  Text: This website was written in IVAN 😉 Take a look at&nbsp;
   Text
-    a href="https://github.com/gustavgb/ivan":Github
+    a href="https://github.com/gustavgb/ivan" target="_blank":Github
