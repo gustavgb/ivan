@@ -1,0 +1,29 @@
+import LightText: Text
+import Footer
+import Main
+
+inject GlobalStyle: style
+  html *
+    box-sizing: border-box;
+
+inject GlobalStyleExtension: style
+  body
+    background-color: #efefde;
+    margin: 0;
+
+inject Script type="application/javascript": script
+  console.log('hello world!')
+
+page
+  head
+    title:Gustav's website
+    GlobalStyle: GlobalStyleExtension
+  body
+    Script
+    Main
+      Text
+        :About
+      a href="/"
+        :Go to homepage
+    Footer
+      p:Footer content

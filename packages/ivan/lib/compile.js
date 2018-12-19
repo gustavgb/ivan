@@ -22,16 +22,27 @@ const processFiles = (pages, components) => pages.map(file => {
 
 const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')
 
+const parseFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val, index, list) => {
+  if (index < list.length - 1) {
+    return val
+  } else {
+    return a
+  }
+}, '')
+
 const writeOutput = (sourceFileName, content, extension = '.html') => {
   let fileName = parseFileName(sourceFileName)
-
-  console.log('Saving ' + fileName + extension)
+  let fileDir = parseFileDir(sourceFileName)
+  if (fileDir.length > 0) fileDir += '/'
 
   if (fileName !== 'index') {
-    fs.emptyDirSync('dist/' + fileName)
-    fs.writeFileSync(`dist/${fileName}/index${extension}`, content, 'utf8')
+    fs.emptyDirSync('dist/' + fileDir + fileName)
+    fs.writeFileSync(`dist/${fileDir}${fileName}/index${extension}`, content, 'utf8')
+
+    console.log(`Saving ${fileDir}${fileName}/index${extension}`)
   } else {
-    fs.writeFileSync(`dist/${fileName}${extension}`, content, 'utf8')
+    fs.writeFileSync(`dist/${fileDir}${fileName}${extension}`, content, 'utf8')
+    console.log(`Saving ${fileDir}${fileName}${extension}`)
   }
 }
 
