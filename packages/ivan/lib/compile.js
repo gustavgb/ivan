@@ -69,9 +69,10 @@ const compile = (sourceDir) => {
 
   pages.forEach(fileObj => {
     try {
-      const markup = renderMarkup(fileObj.transpiledFile.filter(el => el.entry)[0].render(globals))
+      const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
+      const formattedMarkup = renderMarkup(markup)
 
-      writeOutput(fileObj.src, markup)
+      writeOutput(fileObj.src, formattedMarkup)
     } catch (e) {
       throw new Error(`${e.message} (${fileObj.src})`)
     }

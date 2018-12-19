@@ -5,8 +5,7 @@ style Wrapper: div
   MixinWidth
   MixinClearfix
 
-  margin: 0 auto
-  padding: 6rem 0 4rem
+  margin: 6rem auto 4rem
 
 style Line: hr
   margin: 4rem 0 0
@@ -56,5 +55,6 @@ export layout Top: Wrapper
     LogoByline: A minimalist markup language
   Menu
     MenuItem href="/": Home
-    MenuItem href="/about": About
+    MenuItem href="/getting-started": Getting started
+    MenuItem href="/docs": Docs
   Line

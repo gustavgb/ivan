@@ -6,7 +6,6 @@ style Text: p
   display: inline
 
 style FooterWrapper: footer
-  background-color: #eee
   margin: 0 auto
   padding: 25px 20px
   font-size: 15px
@@ -21,6 +20,6 @@ style FooterWrapper: footer
   MixinClearfix
 
 export layout Footer: FooterWrapper
-  Text: Find the source on
+  Text: Find the source on 
   Text
-    a href="https://github.com/gustavgb/ivan": Github
+    a href="https://github.com/gustavgb/ivan":Github

@@ -1,6 +1,0 @@
-import DarkText: Text
-import Page
-
-page
-  Page
-    Text: About

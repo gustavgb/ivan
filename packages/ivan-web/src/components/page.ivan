@@ -6,8 +6,7 @@ import MixinWidth
 style BodyWrapper: div
   MixinWidth
   margin: 0 auto
-  padding: 2rem 0
-  padding-bottom: 6.5rem
+  padding-bottom: 10rem
 
 export layout Page
   Head

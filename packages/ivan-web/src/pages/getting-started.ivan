@@ -1,0 +1,8 @@
+import DarkText: Text
+import Page
+import Title
+
+page
+  Page
+    Title: Getting started
+    Text: Coming soon

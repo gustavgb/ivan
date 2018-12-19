@@ -36,6 +36,10 @@ class Element {
         body = components[bodyElement].render('', this.bodyArgs.slice[1], globals, stylesheet)
       } else {
         body = this.body
+          .replace(/\s{2,}/, (match) => match.replace(/\s/g, '&nbsp;'))
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\\n/g, '<br>')
       }
     } else if (Array.isArray(this.children)) {
       body = this.children.map(child => child.render(components, globals, stylesheet)).join('')
