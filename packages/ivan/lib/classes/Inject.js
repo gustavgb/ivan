@@ -11,7 +11,7 @@ class Inject {
     this.type = 'component'
   }
 
-  render (childBody = '', props, globals, stylesheet, inject = '') {
+  render (childBody = '', props, globals, stylesheet) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).join(' ')
 
@@ -23,7 +23,7 @@ class Inject {
 
     childBody = childBody ? childBody.replace(new RegExp(`^<${tag}>`), '').replace(new RegExp(`</${tag}>$`), '') : ''
 
-    return `<${tag}${attrs ? ' ' + attrs : ''}>\n${body}${childBody}${inject}</${tag}>`
+    return `<${tag}${attrs ? ' ' + attrs : ''}>\n${body}${childBody}</${tag}>`
   }
 }
 

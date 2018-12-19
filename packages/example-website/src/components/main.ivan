@@ -1,3 +1,6 @@
+inject StyleExtension
+  width: 1200px
+
 export style Main: div id="main"
   background-color: lightblue;
   padding: 20px;

@@ -11,7 +11,7 @@ class Layout {
     this.type = 'component'
   }
 
-  render (childBody = '', props, globals, stylesheet, inject = '') {
+  render (childBody = '', props, globals, stylesheet) {
     const components = collectComponentIndex(this.file, globals)
 
     let body = this.children.map(child => child.element === '!children' ? child.element : child.render(components, globals, stylesheet)).join('').replace('!children', childBody)
@@ -22,17 +22,17 @@ class Layout {
 
     const rootComponent = components[this.element]
     if (rootComponent) {
-      return rootComponent.render(body, [].concat(this.defaultProps).concat(props), globals, stylesheet, inject)
+      return rootComponent.render(body, [].concat(this.defaultProps).concat(props), globals, stylesheet)
     }
 
     const tag = this.element
     const attrs = [].concat(this.defaultProps).concat(props).join(' ')
 
     if (!tag) {
-      return `${body}${inject}`
+      return body
     }
 
-    return `<${tag}${attrs ? ' ' + attrs : ''}>${body}${inject}</${tag}>`
+    return `<${tag}${attrs ? ' ' + attrs : ''}>${body}</${tag}>`
   }
 }
 

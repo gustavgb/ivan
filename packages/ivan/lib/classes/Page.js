@@ -8,7 +8,7 @@ class Page {
     this.entry = true
   }
 
-  render (globals, inject = '') {
+  render (globals) {
     const styleindex = {}
     const components = collectComponentIndex(this.file, globals)
 
@@ -21,7 +21,7 @@ class Page {
 
     pageBody = pageBody.replace('</head>', stylesheetMarkup + '</head>')
 
-    const markup = `<!DOCTYPE html><html>${pageBody}${inject}</html>`
+    const markup = `<!DOCTYPE html><html>${pageBody}</html>`
 
     return markup
   }

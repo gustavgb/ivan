@@ -21,12 +21,12 @@ class Element {
     return `${indentation.join('')}${line}${children}`
   }
 
-  render (components, globals, stylesheet, inject = '') {
+  render (components, globals, stylesheet) {
     let body = ''
     const bodyElement = this.bodyArgs[0]
     if (bodyElement) {
       if (this.element && components[bodyElement]) {
-        body = components[bodyElement].render('', this.bodyArgs.slice[1], globals, stylesheet, inject)
+        body = components[bodyElement].render('', this.bodyArgs.slice[1], globals, stylesheet)
       } else {
         body = this.body
       }
@@ -37,22 +37,21 @@ class Element {
     const component = components[this.element]
 
     if (component) {
-      return component.render(body, this.props, globals, stylesheet, inject)
+      return component.render(body, this.props, globals, stylesheet)
     } else {
       const attrs = this.props.join(' ')
       const tag = this.element
 
-      const elementBody = `${body}${inject}`
       let markup
 
       if (tag) {
-        if (elementBody) {
-          markup = `<${tag}${attrs ? ' ' + attrs : ''}>${elementBody}</${tag}>`
+        if (body) {
+          markup = `<${tag}${attrs ? ' ' + attrs : ''}>${body}</${tag}>`
         } else {
           markup = `<${tag}${attrs ? ' ' + attrs : ''} />`
         }
       } else {
-        markup = elementBody
+        markup = body
       }
 
       return markup

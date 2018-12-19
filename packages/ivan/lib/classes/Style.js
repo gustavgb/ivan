@@ -14,7 +14,7 @@ class Style {
     this.type = 'component'
   }
 
-  render (childBody, props, globals, stylesheet, inject) {
+  render (childBody, props, globals, stylesheet) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
 
