@@ -35,11 +35,15 @@ class Style {
 
     stylesheet[this.className] = styles
 
-    if (!tag && childBody) {
-      throw new Error('Style component (' + this.name + ') has children but no tag and therefore cannot be rendered.')
+    if (!tag) {
+      throw new Error('Style component (' + this.name + ') has no tag and therefore cannot be rendered.')
     }
 
-    return `<${tag}${attrs ? ' ' + attrs : ''}>${childBody}</${tag}>`
+    if (childBody) {
+      return `<${tag}${attrs ? ' ' + attrs : ''}>${childBody}</${tag}>`
+    }
+
+    return `<${tag}${attrs ? ' ' + attrs : ''} />`
   }
 }
 
