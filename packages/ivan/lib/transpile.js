@@ -24,6 +24,10 @@ const handleCommand = (statement) => {
     case 'export': {
       const element = handleCommand(statement.getWithoutFirstCommand())
 
+      if (element.type !== 'component') {
+        throw new Error('Exports must be components.')
+      }
+
       element.type = 'export'
 
       return element
@@ -66,7 +70,7 @@ const transpile = (statement) => {
   if (statement instanceof Statement && statement.isRoot) {
     const transpiledFile = statement.children.map(handleCommand)
     transpiledFile.forEach(child => {
-      if (child instanceof Layout || child instanceof Page) {
+      if (child instanceof Layout || child instanceof Page || child instanceof Style) {
         child.file = transpiledFile
       }
     })

@@ -1,8 +1,8 @@
-inject StyleExtension
-  width: 1200px
+style MainExtend
+  width: 1100px
 
 export style Main: div id="main"
   background-color: lightblue;
   padding: 20px;
   margin: 0 auto;
-  width: 1100px;
+  MainExtend

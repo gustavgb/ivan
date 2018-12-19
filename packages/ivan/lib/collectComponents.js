@@ -14,7 +14,7 @@ const collectComponents = (transpiledFile, globals) => {
 
   const importIndex = imports.reduce((acc, imp) => Object.assign(acc, { [imp.mapTo]: imp.component }), {})
 
-  const fileIndex = transpiledFile.filter(a => !!a.name && a.type === 'component').reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
+  const fileIndex = transpiledFile.filter(a => !!a.name && (a.type === 'component' || a.type === 'export')).reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
 
   return Object.assign({}, importIndex, fileIndex)
 }

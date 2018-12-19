@@ -68,9 +68,13 @@ const compile = (sourceDir) => {
   const globals = collectExports(files)
 
   pages.forEach(fileObj => {
-    const markup = renderMarkup(fileObj.transpiledFile.filter(el => el.entry)[0].render(globals))
+    try {
+      const markup = renderMarkup(fileObj.transpiledFile.filter(el => el.entry)[0].render(globals))
 
-    writeOutput(fileObj.src, markup)
+      writeOutput(fileObj.src, markup)
+    } catch (e) {
+      throw new Error(`${e.message} (${fileObj.src})`)
+    }
   })
 
   if (fs.pathExistsSync(sourceDir + '/static')) {
