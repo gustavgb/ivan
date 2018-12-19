@@ -15,25 +15,25 @@ class Style {
     this.type = 'component'
   }
 
-  renderChild (child, components, globals) {
+  renderChild (child, indentationOffset, components, globals) {
     if (components[child.element] instanceof Style) {
-      return components[child.element].renderStyles(globals)
+      return components[child.element].renderStyles(globals, child.statement.indentation + indentationOffset)
     } else {
-      return child.renderRaw(0, grandchild => this.renderChild(grandchild, components, globals))
+      return child.renderRaw(indentationOffset, (grandchild) => this.renderChild(grandchild, indentationOffset, components, globals))
     }
   }
 
-  renderStyles (globals) {
+  renderStyles (globals, parentIndentation = 0) {
     const components = collectComponentIndex(this.file, globals)
 
-    return this.children.map(child => this.renderChild(child, components, globals)).join('\n')
+    return this.children.map(child => this.renderChild(child, parentIndentation - child.statement.indentation, components, globals)).join('\n')
   }
 
   render (childBody, props, globals, stylesheet) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
 
-    const styles = this.renderStyles(globals)
+    const styles = this.renderStyles(globals, 2)
 
     stylesheet[this.className] = styles
 

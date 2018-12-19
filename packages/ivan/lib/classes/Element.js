@@ -19,7 +19,7 @@ class Element {
     let children = ''
     if (Array.isArray(this.children)) {
       if (childRenderer) {
-        children = '\n' + this.children.map(childRenderer).join('\n')
+        children = '\n' + this.children.map(child => childRenderer(child)).join('\n')
       } else {
         children = '\n' + this.children.map(child => child.renderRaw(indentationOffset)).join('\n')
       }

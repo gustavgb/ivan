@@ -1,4 +1,5 @@
 import DarkText: Text
+import LightText
 
 export style BulletList: ul
   font-size: 1.8rem
