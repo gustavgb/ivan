@@ -9,14 +9,15 @@ const Inject = require('./classes/Inject')
 const mapChild = (child) => new Element(
   child.commandArgs[0],
   child.commandArgs.slice(1),
-  child.commandBody,
+  child.body,
+  child.bodyArgs,
   child.children.map(mapChild),
   child
 )
 
 const handleCommand = (statement) => {
   const commandArgs = statement.commandArgs
-  const commandBody = statement.commandBody
+  const bodyArgs = statement.bodyArgs
   const children = statement.children.map(mapChild)
 
   switch (commandArgs[0]) {
@@ -30,25 +31,28 @@ const handleCommand = (statement) => {
     case 'import': {
       const importName = commandArgs[1]
 
-      return new Import(importName, commandBody)
+      return new Import(importName, bodyArgs[0])
     }
     case 'inject': {
       const name = commandArgs[1]
-      const props = commandArgs.slice(2)
+      const props = bodyArgs.slice(1)
+      const element = bodyArgs[0]
 
-      return new Inject(name, commandBody, props, children)
+      return new Inject(name, element, props, children)
     }
     case 'style': {
       const componentName = commandArgs[1]
-      const props = commandArgs.slice(2)
+      const props = bodyArgs.slice(1)
+      const element = bodyArgs[0]
 
-      return new Style(componentName, commandBody, props, children)
+      return new Style(componentName, element, props, children)
     }
     case 'layout': {
       const name = commandArgs[1]
-      const defaultProps = commandArgs.slice(2)
+      const props = bodyArgs.slice(1)
+      const element = bodyArgs[0]
 
-      return new Layout(name, commandBody, defaultProps, children)
+      return new Layout(name, element, props, children)
     }
     case 'page': {
       return new Page(children)

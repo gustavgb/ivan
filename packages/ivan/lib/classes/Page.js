@@ -1,5 +1,4 @@
 const collectComponentIndex = require('./../collectComponents')
-const { formatStylesheet } = require('./../format')
 const renderStylesheet = require('./../renderStylesheet')
 
 class Page {
@@ -16,8 +15,7 @@ class Page {
     let pageBody = this.children.map(child => child.render(components, globals, styleindex)).join('')
 
     const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('')
-    const formattedStylesheet = formatStylesheet(stylesheet)
-    const compiledStylesheet = renderStylesheet(formattedStylesheet)
+    const compiledStylesheet = renderStylesheet(stylesheet)
 
     const stylesheetMarkup = `<style>\n${compiledStylesheet}</style>`
 

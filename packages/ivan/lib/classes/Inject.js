@@ -1,4 +1,3 @@
-const { formatStylesheet } = require('./../format')
 const renderStylesheet = require('./../renderStylesheet')
 
 class Inject {
@@ -19,7 +18,7 @@ class Inject {
     let body = this.children.map(child => child.renderRaw(-2)).join('\n')
 
     if (tag === 'style') {
-      body = renderStylesheet(formatStylesheet(body))
+      body = renderStylesheet(body)
     }
 
     childBody = childBody ? childBody.replace(new RegExp(`^<${tag}>`), '').replace(new RegExp(`</${tag}>$`), '') : ''

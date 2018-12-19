@@ -1,8 +1,9 @@
 class Element {
-  constructor (element, props, body, children, statement) {
+  constructor (element, props, body, bodyArgs, children, statement) {
     this.element = element
     this.props = props
     this.body = body
+    this.bodyArgs = bodyArgs
     this.children = children
     this.statement = statement
   }
@@ -21,18 +22,19 @@ class Element {
   }
 
   render (components, globals, stylesheet, inject = '') {
-    const component = components[this.element]
-
     let body = ''
-    if (this.body) {
-      if (components[this.body]) {
-        body = components[this.body].render('', [], globals, stylesheet, inject)
+    const bodyElement = this.bodyArgs[0]
+    if (bodyElement) {
+      if (this.element && components[bodyElement]) {
+        body = components[bodyElement].render('', this.bodyArgs.slice[1], globals, stylesheet, inject)
       } else {
         body = this.body
       }
     } else if (Array.isArray(this.children)) {
       body = this.children.map(child => child.render(components, globals, stylesheet)).join('')
     }
+
+    const component = components[this.element]
 
     if (component) {
       return component.render(body, this.props, globals, stylesheet, inject)
@@ -43,10 +45,14 @@ class Element {
       const elementBody = `${body}${inject}`
       let markup
 
-      if (elementBody) {
-        markup = `<${tag}${attrs ? ' ' + attrs : ''}>${elementBody}</${tag}>`
+      if (tag) {
+        if (elementBody) {
+          markup = `<${tag}${attrs ? ' ' + attrs : ''}>${elementBody}</${tag}>`
+        } else {
+          markup = `<${tag}${attrs ? ' ' + attrs : ''} />`
+        }
       } else {
-        markup = `<${tag}${attrs ? ' ' + attrs : ''} />`
+        markup = elementBody
       }
 
       return markup

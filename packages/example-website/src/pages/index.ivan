@@ -16,13 +16,14 @@ inject Script type="application/javascript": script
 
 page
   head
-    title: Gustav's website
+    title:Gustav's website
     GlobalStyle: GlobalStyleExtension
   body
     Script
-    Main id="main"
+    Main
       Text
-        Index
-      a href="/about": Go to about me
+        :Index
+      a href="/about"
+        :Go to about me
     Footer
-      p: Footer content
+      p:Footer content

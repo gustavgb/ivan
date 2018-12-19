@@ -1,4 +1,4 @@
-export style Main: div
+export style Main: div id="main"
   background-color: lightblue;
   padding: 20px;
   margin: 0 auto;

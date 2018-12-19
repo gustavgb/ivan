@@ -17,6 +17,7 @@ style FooterWrapper: footer
 
 
 export layout Footer: FooterWrapper
-  Text: Copyright 2018 Gustav B
+  Text
+    :Copyright 2018 Gustav B
   Text
     a href="/": https://gustavgb.github.io

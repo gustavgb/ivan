@@ -91,11 +91,11 @@ import Main
 
 page
   head
-    title: Gustav's website
+    title:Gustav's website
   body
     Main id="main"
-      Text: Index
-      a href="/about": Go to about me
+      Text:Index
+      a href="/about":Go to about me
     Footer
 ```
 

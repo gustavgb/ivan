@@ -4,7 +4,9 @@ class Statement {
     this.lineContent = lineContent
 
     if (lineContent !== 'root') {
-      let bodyBreakIndex = null
+      let body = null
+      let bodyArgs = null
+      let commandArgs = null
       let inString = false
 
       for (let i = 0; i < lineContent.length; i++) {
@@ -14,23 +16,17 @@ class Statement {
         }
 
         if (!inString && c === ':') {
-          bodyBreakIndex = i
+          commandArgs = lineContent.substring(0, i).split(' ')
+          body = lineContent.substring(i + 1)
+          bodyArgs = body.replace(/^\s{1,}/, '').replace(/\s{1,}$/, '').split(' ')
+
           break
         }
       }
 
-      if (bodyBreakIndex) {
-        const commandArgs = lineContent.substring(0, bodyBreakIndex).split(' ')
-        const body = lineContent.substring(bodyBreakIndex + 1).replace(/^\s{1,}/, '').replace(/\s{1,}$/, '')
-
-        console.log(commandArgs, body)
-
-        this.commandArgs = commandArgs
-        this.commandBody = body
-      } else {
-        this.commandArgs = lineContent.split(' ')
-        this.commandBody = ''
-      }
+      this.commandArgs = commandArgs || lineContent.split(' ')
+      this.body = body || ''
+      this.bodyArgs = bodyArgs || ''
     } else {
       this.isRoot = true
     }
@@ -43,7 +39,7 @@ class Statement {
       return this
     }
 
-    const lineContent = this.commandArgs.slice(1).join(' ') + (this.commandBody ? ': ' + this.commandBody : '')
+    const lineContent = this.commandArgs.slice(1).join(' ') + (this.body ? ':' + this.body : '')
 
     return new Statement(this.indentation, lineContent, this.children)
   }
