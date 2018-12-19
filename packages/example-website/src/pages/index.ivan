@@ -21,7 +21,8 @@ page
   body
     Script
     Main id="main"
-      Text: Index
+      Text
+        Index
       a href="/about": Go to about me
     Footer
       p: Footer content

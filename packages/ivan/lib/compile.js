@@ -9,11 +9,15 @@ const collectExports = require('./collectExports')
 const processFiles = (pages, components) => pages.map(file => {
   const content = fs.readFileSync(file, 'utf8')
 
-  const fileTree = parseFile(content)
+  try {
+    const fileTree = parseFile(content)
 
-  const transpiledFile = transpile(fileTree)
+    const transpiledFile = transpile(fileTree)
 
-  return { src: file, transpiledFile }
+    return { src: file, transpiledFile }
+  } catch (e) {
+    throw new Error(`${e.message} (${file})`)
+  }
 })
 
 const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')

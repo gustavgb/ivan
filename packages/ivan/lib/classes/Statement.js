@@ -1,17 +1,36 @@
 class Statement {
   constructor (indentation, lineContent, children) {
-    this.isRoot = false
     this.indentation = indentation
     this.lineContent = lineContent
 
     if (lineContent !== 'root') {
-      const split = lineContent.replace(/\s{2,}/gi, ' ').replace(/\s:/, ':').replace(/:\s/, '!COMMANDBODYBREAK!').split('!COMMANDBODYBREAK!')
-      const command = split[0]
-      const body = split[1]
-      const commandArgs = command.split(' ')
+      let bodyBreakIndex = null
+      let inString = false
 
-      this.commandArgs = commandArgs
-      this.commandBody = body
+      for (let i = 0; i < lineContent.length; i++) {
+        const c = lineContent[i]
+        if (c === '"') {
+          inString = !inString
+        }
+
+        if (!inString && c === ':') {
+          bodyBreakIndex = i
+          break
+        }
+      }
+
+      if (bodyBreakIndex) {
+        const commandArgs = lineContent.substring(0, bodyBreakIndex).split(' ')
+        const body = lineContent.substring(bodyBreakIndex + 1).replace(/^\s{1,}/, '').replace(/\s{1,}$/, '')
+
+        console.log(commandArgs, body)
+
+        this.commandArgs = commandArgs
+        this.commandBody = body
+      } else {
+        this.commandArgs = lineContent.split(' ')
+        this.commandBody = ''
+      }
     } else {
       this.isRoot = true
     }
