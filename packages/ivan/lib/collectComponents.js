@@ -1,22 +1,33 @@
-const collectComponents = (transpiledFile, globals) => {
-  const imports = transpiledFile.filter(el => el.type === 'import').map(imp => {
-    const component = globals.filter(g => g.name === imp.name)[0]
+"use strict";
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var collectComponents = function collectComponents(transpiledFile, globals) {
+  var imports = transpiledFile.filter(function (el) {
+    return el.type === 'import';
+  }).map(function (imp) {
+    var component = globals.filter(function (g) {
+      return g.name === imp.name;
+    })[0];
 
     if (!component) {
-      throw new Error('Import "' + imp.name + '" invalid. Component not exported anywhere')
+      throw new Error('Import "' + imp.name + '" invalid. Component not exported anywhere');
     }
 
     return {
-      component,
+      component: component,
       mapTo: imp.mapTo || imp.name
-    }
-  })
+    };
+  });
+  var importIndex = imports.reduce(function (acc, imp) {
+    return Object.assign(acc, _defineProperty({}, imp.mapTo, imp.component));
+  }, {});
+  var fileIndex = transpiledFile.filter(function (a) {
+    return !!a.name && (a.type === 'component' || a.type === 'export');
+  }).reduce(function (acc, el) {
+    return Object.assign(acc, _defineProperty({}, el.name, el));
+  }, {});
+  return Object.assign({}, importIndex, fileIndex);
+};
 
-  const importIndex = imports.reduce((acc, imp) => Object.assign(acc, { [imp.mapTo]: imp.component }), {})
-
-  const fileIndex = transpiledFile.filter(a => !!a.name && (a.type === 'component' || a.type === 'export')).reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
-
-  return Object.assign({}, importIndex, fileIndex)
-}
-
-module.exports = collectComponents
+module.exports = collectComponents;

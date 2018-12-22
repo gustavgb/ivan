@@ -1,31 +1,46 @@
-const collectComponentIndex = require('./../collectComponents')
-const renderStylesheet = require('./../renderStylesheet')
+"use strict";
 
-class Page {
-  constructor (children) {
-    this.children = children
-    this.file = null
-    this.entry = true
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var collectComponentIndex = require('./../collectComponents');
+
+var renderStylesheet = require('./../renderStylesheet');
+
+var Page =
+/*#__PURE__*/
+function () {
+  function Page(children) {
+    _classCallCheck(this, Page);
+
+    this.children = children;
+    this.file = null;
+    this.entry = true;
   }
 
-  render (globals) {
-    const styleindex = {}
-    const components = collectComponentIndex(this.file, globals)
+  _createClass(Page, [{
+    key: "render",
+    value: function render(globals) {
+      var styleindex = {};
+      var components = collectComponentIndex(this.file, globals);
+      var pageBody = this.children.map(function (child) {
+        return child.render(components, globals, styleindex);
+      }).join('');
+      var stylesheet = Object.keys(styleindex).reduce(function (styles, key) {
+        return styles.concat([".".concat(key, "\n").concat(styleindex[key])]);
+      }, []).join('\n');
+      var compiledStylesheet = renderStylesheet(stylesheet);
+      var stylesheetMarkup = "<style>\n".concat(compiledStylesheet, "</style>");
+      pageBody = pageBody.replace('</head>', stylesheetMarkup + '</head>');
+      var markup = "<!DOCTYPE html><html>".concat(pageBody, "</html>");
+      return markup;
+    }
+  }]);
 
-    let pageBody = this.children.map(child => child.render(components, globals, styleindex)).join('')
+  return Page;
+}();
 
-    const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('\n')
-
-    const compiledStylesheet = renderStylesheet(stylesheet)
-
-    const stylesheetMarkup = `<style>\n${compiledStylesheet}</style>`
-
-    pageBody = pageBody.replace('</head>', stylesheetMarkup + '</head>')
-
-    const markup = `<!DOCTYPE html><html>${pageBody}</html>`
-
-    return markup
-  }
-}
-
-module.exports = Page
+module.exports = Page;

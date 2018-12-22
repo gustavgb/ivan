@@ -1,86 +1,97 @@
-const glob = require('glob')
-const fs = require('fs-extra')
+"use strict";
 
-const parseFile = require('./parseFile')
-const transpile = require('./transpile')
-const collectExports = require('./collectExports')
-const renderMarkup = require('./renderMarkup')
+var glob = require('glob');
 
-const processFiles = (pages, components) => pages.map(file => {
-  const content = fs.readFileSync(file, 'utf8')
+var fs = require('fs-extra');
 
-  try {
-    const fileTree = parseFile(content)
+var parseFile = require('./parseFile');
 
-    const transpiledFile = transpile(fileTree)
+var transpile = require('./transpile');
 
-    return { src: file, transpiledFile }
-  } catch (e) {
-    throw new Error(`${e.message} (${file})`)
-  }
-})
+var collectExports = require('./collectExports');
 
-const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')
+var renderMarkup = require('./renderMarkup');
 
-const parseFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val, index, list) => {
-  if (index < list.length - 1) {
-    return val
-  } else {
-    return a
-  }
-}, '')
+var processFiles = function processFiles(pages, components) {
+  return pages.map(function (file) {
+    var content = fs.readFileSync(file, 'utf8');
 
-const writeOutput = (sourceFileName, content, extension = '.html') => {
-  let fileName = parseFileName(sourceFileName)
-  let fileDir = parseFileDir(sourceFileName)
-  if (fileDir.length > 0) fileDir += '/'
+    try {
+      var fileTree = parseFile(content);
+      var transpiledFile = transpile(fileTree);
+      return {
+        src: file,
+        transpiledFile: transpiledFile
+      };
+    } catch (e) {
+      throw new Error("".concat(e.message, " (").concat(file, ")"));
+    }
+  });
+};
+
+var parseFileName = function parseFileName(name) {
+  return name.split('/').reduce(function (a, val) {
+    return val;
+  }).replace('.ivan', '');
+};
+
+var parseFileDir = function parseFileDir(name) {
+  return name.split('pages/')[1].split('/').reduce(function (a, val, index, list) {
+    if (index < list.length - 1) {
+      return val;
+    } else {
+      return a;
+    }
+  }, '');
+};
+
+var writeOutput = function writeOutput(sourceFileName, content) {
+  var extension = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '.html';
+  var fileName = parseFileName(sourceFileName);
+  var fileDir = parseFileDir(sourceFileName);
+  if (fileDir.length > 0) fileDir += '/';
 
   if (fileName !== 'index') {
-    fs.emptyDirSync('dist/' + fileDir + fileName)
-    fs.writeFileSync(`dist/${fileDir}${fileName}/index${extension}`, content, 'utf8')
-
-    console.log(`Saving ${fileDir}${fileName}/index${extension}`)
+    fs.emptyDirSync('dist/' + fileDir + fileName);
+    fs.writeFileSync("dist/".concat(fileDir).concat(fileName, "/index").concat(extension), content, 'utf8');
+    console.log("Saving ".concat(fileDir).concat(fileName, "/index").concat(extension));
   } else {
-    fs.writeFileSync(`dist/${fileDir}${fileName}${extension}`, content, 'utf8')
-    console.log(`Saving ${fileDir}${fileName}${extension}`)
+    fs.writeFileSync("dist/".concat(fileDir).concat(fileName).concat(extension), content, 'utf8');
+    console.log("Saving ".concat(fileDir).concat(fileName).concat(extension));
   }
-}
+};
 
-const compile = (sourceDir) => {
-  fs.emptyDirSync('dist')
-
-  const pagePaths = []
-  const pagePrefix = new RegExp(`^${sourceDir}/pages`)
-
-  const filePaths = glob.sync(sourceDir + '/!(static)/**/*.ivan').filter(file => {
+var compile = function compile(sourceDir) {
+  fs.emptyDirSync('dist');
+  var pagePaths = [];
+  var pagePrefix = new RegExp("^".concat(sourceDir, "/pages"));
+  var filePaths = glob.sync(sourceDir + '/!(static)/**/*.ivan').filter(function (file) {
     if (pagePrefix.test(file)) {
-      pagePaths.push(file)
-      return false
+      pagePaths.push(file);
+      return false;
     }
-    return true
-  })
 
-  console.log('Compiling pages:\n  - ' + [].concat(filePaths, pagePaths).join('\n  - '))
-
-  const files = processFiles(filePaths)
-  const pages = processFiles(pagePaths)
-
-  const globals = collectExports(files)
-
-  pages.forEach(fileObj => {
+    return true;
+  });
+  console.log('Compiling pages:\n  - ' + [].concat(filePaths, pagePaths).join('\n  - '));
+  var files = processFiles(filePaths);
+  var pages = processFiles(pagePaths);
+  var globals = collectExports(files);
+  pages.forEach(function (fileObj) {
     try {
-      const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
-      const formattedMarkup = renderMarkup(markup)
-
-      writeOutput(fileObj.src, formattedMarkup)
+      var markup = fileObj.transpiledFile.filter(function (el) {
+        return el.entry;
+      })[0].render(globals);
+      var formattedMarkup = renderMarkup(markup);
+      writeOutput(fileObj.src, formattedMarkup);
     } catch (e) {
-      throw new Error(`${e.message} (${fileObj.src})`)
+      throw new Error("".concat(e.message, " (").concat(fileObj.src, ")"));
     }
-  })
+  });
 
   if (fs.pathExistsSync(sourceDir + '/static')) {
-    fs.copySync(sourceDir + '/static', 'dist')
+    fs.copySync(sourceDir + '/static', 'dist');
   }
-}
+};
 
-module.exports = compile
+module.exports = compile;

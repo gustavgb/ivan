@@ -1,7 +1,12 @@
-const collectExports = (files) => {
-  const exports = files.reduce((result, file) => result.concat(file.transpiledFile.filter(cmd => cmd.type === 'export')), [])
+"use strict";
 
-  return exports
-}
+var collectExports = function collectExports(files) {
+  var exports = files.reduce(function (result, file) {
+    return result.concat(file.transpiledFile.filter(function (cmd) {
+      return cmd.type === 'export';
+    }));
+  }, []);
+  return exports;
+};
 
-module.exports = collectExports
+module.exports = collectExports;

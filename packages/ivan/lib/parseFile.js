@@ -1,74 +1,94 @@
-const Statement = require('./classes/Statement')
+"use strict";
 
-class Section {
-  constructor (indent, content, parent = null) {
-    this.indent = indent
-    this.content = content
-    this.parent = parent
-    this.children = []
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Statement = require('./classes/Statement');
+
+var Section =
+/*#__PURE__*/
+function () {
+  function Section(indent, content) {
+    var parent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    _classCallCheck(this, Section);
+
+    this.indent = indent;
+    this.content = content;
+    this.parent = parent;
+    this.children = [];
   }
 
-  addChild (child) {
-    this.children.push(child)
-  }
-}
+  _createClass(Section, [{
+    key: "addChild",
+    value: function addChild(child) {
+      this.children.push(child);
+    }
+  }]);
 
-const createStatements = (section) => new Statement(section.indent, section.content, section.children.map(createStatements))
+  return Section;
+}();
 
-const deepenStructure = (lines) => {
-  let root = new Section(-1, 'root')
-  let head = root
+var createStatements = function createStatements(section) {
+  return new Statement(section.indent, section.content, section.children.map(createStatements));
+};
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
+var deepenStructure = function deepenStructure(lines) {
+  var root = new Section(-1, 'root');
+  var head = root;
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
 
     if (line.indent > head.indent) {
-      const s = new Section(line.indent, line.content, head)
-      head.addChild(s)
-
-      head = s
+      var s = new Section(line.indent, line.content, head);
+      head.addChild(s);
+      head = s;
     } else if (line.indent === head.indent) {
-      const s = new Section(line.indent, line.content, head.parent)
-      head.parent.addChild(s)
+      var _s = new Section(line.indent, line.content, head.parent);
 
-      head = s
+      head.parent.addChild(_s);
+      head = _s;
     } else {
       while (line.indent < head.indent) {
-        head = head.parent
+        head = head.parent;
       }
 
-      const s = new Section(line.indent, line.content, head.parent)
+      var _s2 = new Section(line.indent, line.content, head.parent);
 
-      head.parent.addChild(s)
-      head = s
+      head.parent.addChild(_s2);
+      head = _s2;
     }
   }
 
-  return createStatements(root)
-}
+  return createStatements(root);
+};
 
-const parseFile = (raw) => {
-  const lines = raw.split('\n').map(line => {
-    let indent = 0
-    for (let i = 0; i < line.length; i++) {
+var parseFile = function parseFile(raw) {
+  var lines = raw.split('\n').map(function (line) {
+    var indent = 0;
+
+    for (var i = 0; i < line.length; i++) {
       if (line[i] === ' ') {
-        indent++
+        indent++;
       } else {
-        break
+        break;
       }
     }
 
-    const el = {
-      indent,
+    var el = {
+      indent: indent,
       content: line.substr(indent)
-    }
+    };
+    return el;
+  }).filter(function (el) {
+    return el.content;
+  });
+  var root = deepenStructure(lines);
+  return root;
+};
 
-    return el
-  }).filter(el => el.content)
-
-  const root = deepenStructure(lines)
-
-  return root
-}
-
-module.exports = parseFile
+module.exports = parseFile;

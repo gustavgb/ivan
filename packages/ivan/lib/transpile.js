@@ -1,84 +1,97 @@
-const Statement = require('./classes/Statement')
-const Import = require('./classes/Import')
-const Style = require('./classes/Style')
-const Layout = require('./classes/Layout')
-const Page = require('./classes/Page')
-const Element = require('./classes/Element')
-const Inject = require('./classes/Inject')
+"use strict";
 
-const mapChild = (child) => new Element(
-  child.commandArgs[0],
-  child.commandArgs.slice(1),
-  child.body,
-  child.bodyArgs,
-  child.children.map(mapChild),
-  child
-)
+var Statement = require('./classes/Statement');
 
-const handleCommand = (statement) => {
-  const commandArgs = statement.commandArgs
-  const bodyArgs = statement.bodyArgs
-  const children = statement.children.map(mapChild)
+var Import = require('./classes/Import');
+
+var Style = require('./classes/Style');
+
+var Layout = require('./classes/Layout');
+
+var Page = require('./classes/Page');
+
+var Element = require('./classes/Element');
+
+var Inject = require('./classes/Inject');
+
+var mapChild = function mapChild(child) {
+  return new Element(child.commandArgs[0], child.commandArgs.slice(1), child.body, child.bodyArgs, child.children.map(mapChild), child);
+};
+
+var handleCommand = function handleCommand(statement) {
+  var commandArgs = statement.commandArgs;
+  var bodyArgs = statement.bodyArgs;
+  var children = statement.children.map(mapChild);
 
   switch (commandArgs[0]) {
-    case 'export': {
-      const element = handleCommand(statement.getWithoutFirstCommand())
+    case 'export':
+      {
+        var element = handleCommand(statement.getWithoutFirstCommand());
 
-      if (element.type !== 'component') {
-        throw new Error('Exports must be components.')
+        if (element.type !== 'component') {
+          throw new Error('Exports must be components.');
+        }
+
+        element.type = 'export';
+        return element;
       }
 
-      element.type = 'export'
+    case 'import':
+      {
+        var importName = commandArgs[1];
+        return new Import(importName, bodyArgs[0]);
+      }
 
-      return element
-    }
-    case 'import': {
-      const importName = commandArgs[1]
+    case 'inject':
+      {
+        var name = commandArgs[1];
+        var props = bodyArgs.slice(1);
+        var _element = bodyArgs[0];
+        return new Inject(name, _element, props, children);
+      }
 
-      return new Import(importName, bodyArgs[0])
-    }
-    case 'inject': {
-      const name = commandArgs[1]
-      const props = bodyArgs.slice(1)
-      const element = bodyArgs[0]
+    case 'style':
+      {
+        var componentName = commandArgs[1];
 
-      return new Inject(name, element, props, children)
-    }
-    case 'style': {
-      const componentName = commandArgs[1]
-      const props = bodyArgs.slice(1)
-      const element = bodyArgs[0]
+        var _props = bodyArgs.slice(1);
 
-      return new Style(componentName, element, props, children)
-    }
-    case 'layout': {
-      const name = commandArgs[1]
-      const props = bodyArgs.slice(1)
-      const element = bodyArgs[0]
+        var _element2 = bodyArgs[0];
+        return new Style(componentName, _element2, _props, children);
+      }
 
-      return new Layout(name, element, props, children)
-    }
-    case 'page': {
-      return new Page(children)
-    }
+    case 'layout':
+      {
+        var _name = commandArgs[1];
+
+        var _props2 = bodyArgs.slice(1);
+
+        var _element3 = bodyArgs[0];
+        return new Layout(_name, _element3, _props2, children);
+      }
+
+    case 'page':
+      {
+        return new Page(children);
+      }
+
     default:
-      return null
+      return null;
   }
-}
+};
 
-const transpile = (statement) => {
+var transpile = function transpile(statement) {
   if (statement instanceof Statement && statement.isRoot) {
-    const transpiledFile = statement.children.map(handleCommand)
-    transpiledFile.forEach(child => {
+    var transpiledFile = statement.children.map(handleCommand);
+    transpiledFile.forEach(function (child) {
       if (child instanceof Layout || child instanceof Page || child instanceof Style) {
-        child.file = transpiledFile
+        child.file = transpiledFile;
       }
-    })
-
-    return transpiledFile
+    });
+    return transpiledFile;
   } else {
-    throw new Error('Invalid statement tree.')
+    throw new Error('Invalid statement tree.');
   }
-}
+};
 
-module.exports = transpile
+module.exports = transpile;
