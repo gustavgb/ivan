@@ -7,6 +7,7 @@ inject GlobalStyle: style
     position: relative
     min-height: 100vh
     background-color:	#f9f9f9
+    overflow: auto
 
   html
     font-size: 62.5%

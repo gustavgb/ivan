@@ -2,6 +2,7 @@ import Footer
 import Head
 import Top
 import MixinWidth
+import GithubCorner
 
 style BodyWrapper: div
   MixinWidth
@@ -11,6 +12,7 @@ style BodyWrapper: div
 export layout Page
   Head
   body
+    GithubCorner href="https://github.com/gustavgb/ivan"
     Top
     BodyWrapper: !children
     Footer

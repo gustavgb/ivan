@@ -5,7 +5,8 @@ style Wrapper: div
   MixinWidth
   MixinClearfix
 
-  margin: 6rem auto 4rem
+  margin: 0 auto
+  padding: 6rem 0 4rem
 
 style Line: hr
   margin: 4rem 0 0
