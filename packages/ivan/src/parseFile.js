@@ -1,21 +1,23 @@
 const Statement = require('./classes/Statement')
+const Line = require('./classes/Line')
+const Section = require('./classes/Section')
 
-class Section {
-  constructor (indent, content, parent = null) {
-    this.indent = indent
-    this.content = content
-    this.parent = parent
-    this.children = []
-  }
+const createLines = (fileContent) => {
+  return fileContent.split('\n').map(line => {
+    let indent = 0
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === ' ') {
+        indent++
+      } else {
+        break
+      }
+    }
 
-  addChild (child) {
-    this.children.push(child)
-  }
+    return new Line(indent, line.substr(indent))
+  }).filter(el => el.content)
 }
 
-const createStatements = (section) => new Statement(section.indent, section.content, section.children.map(createStatements))
-
-const deepenStructure = (lines) => {
+const createSections = (lines) => {
   let root = new Section(-1, 'root')
   let head = root
 
@@ -44,31 +46,15 @@ const deepenStructure = (lines) => {
     }
   }
 
-  return createStatements(root)
+  return root
 }
 
+const createStatements = (section) => new Statement(section.indent, section.content, section.children.map(createStatements))
+
 const parseFile = (raw) => {
-  const lines = raw.split('\n').map(line => {
-    let indent = 0
-    for (let i = 0; i < line.length; i++) {
-      if (line[i] === ' ') {
-        indent++
-      } else {
-        break
-      }
-    }
-
-    const el = {
-      indent,
-      content: line.substr(indent)
-    }
-
-    return el
-  }).filter(el => el.content)
-
-  const root = deepenStructure(lines)
-
-  return root
+  const lines = createLines(raw)
+  const rootSection = createSections(lines)
+  return createStatements(rootSection)
 }
 
 module.exports = parseFile
