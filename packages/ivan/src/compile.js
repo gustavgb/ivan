@@ -1,22 +1,20 @@
-const glob = require('glob')
-const fs = require('fs-extra')
+import glob from 'glob'
+import fs from 'fs-extra'
+import { promisify } from 'util'
 
-const parseFile = require('./parseFile')
-const transpile = require('./transpile')
-const collectExports = require('./collectExports')
-const renderMarkup = require('./renderMarkup')
+import parse from './parse'
+import collectExports from './collectExports'
+import renderMarkup from './renderMarkup'
 
-const processFiles = (pages, components) => pages.map(file => {
-  const content = fs.readFileSync(file, 'utf8')
+const readFile = promisify(fs.readFile)
+const writeFile = promisify(fs.writeFile)
 
+const processFiles = (files) => files.map(file => {
   try {
-    const fileTree = parseFile(content)
-
-    const transpiledFile = transpile(fileTree)
-
-    return { src: file, transpiledFile }
+    return { src: file.src, transpiledFile: parse(file.content) }
   } catch (e) {
-    throw new Error(`${e.message} (${file})`)
+    throw e
+    throw new Error(`${e.message} (${file.src})`)
   }
 })
 
@@ -30,57 +28,104 @@ const parseFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val
   }
 }, '')
 
-const writeOutput = (sourceFileName, content, extension = '.html') => {
-  let fileName = parseFileName(sourceFileName)
-  let fileDir = parseFileDir(sourceFileName)
-  if (fileDir.length > 0) fileDir += '/'
+const writeOutput = async (sourceFileName, content, extension = '.html') => {
+  try {
+    let fileName = parseFileName(sourceFileName)
+    let fileDir = parseFileDir(sourceFileName)
+    if (fileDir.length > 0) fileDir += '/'
 
-  if (fileName !== 'index') {
-    fs.emptyDirSync('dist/' + fileDir + fileName)
-    fs.writeFileSync(`dist/${fileDir}${fileName}/index${extension}`, content, 'utf8')
+    if (fileName !== 'index') {
+      await fs.emptyDir('dist/' + fileDir + fileName)
+      await writeFile(`dist/${fileDir}${fileName}/index${extension}`, content, 'utf8')
 
-    console.log(`Saving ${fileDir}${fileName}/index${extension}`)
-  } else {
-    fs.writeFileSync(`dist/${fileDir}${fileName}${extension}`, content, 'utf8')
-    console.log(`Saving ${fileDir}${fileName}${extension}`)
+      console.log(`Saving ${fileDir}${fileName}/index${extension}`)
+    } else {
+      await writeFile(`dist/${fileDir}${fileName}${extension}`, content, 'utf8')
+      console.log(`Saving ${fileDir}${fileName}${extension}`)
+    }
+  } catch (e) {
+    throw e
   }
 }
 
-const compile = (sourceDir) => {
-  fs.emptyDirSync('dist')
-
-  const pagePaths = []
-  const pagePrefix = new RegExp(`^${sourceDir}/pages`)
-
-  const filePaths = glob.sync(sourceDir + '/!(static)/**/*.ivan').filter(file => {
-    if (pagePrefix.test(file)) {
-      pagePaths.push(file)
-      return false
+const readFiles = (sourceDir) => new Promise((resolve, reject) => {
+  class File {
+    constructor (src, content) {
+      this.src = src
+      this.content = content
     }
-    return true
-  })
+  }
 
-  console.log('Compiling pages:\n  - ' + [].concat(filePaths, pagePaths).join('\n  - '))
-
-  const files = processFiles(filePaths)
-  const pages = processFiles(pagePaths)
-
-  const globals = collectExports(files)
-
-  pages.forEach(fileObj => {
-    try {
-      const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
-      const formattedMarkup = renderMarkup(markup)
-
-      writeOutput(fileObj.src, formattedMarkup)
-    } catch (e) {
-      throw new Error(`${e.message} (${fileObj.src})`)
+  glob(sourceDir + '/!(static)/**/*.ivan', (err, files) => {
+    if (err) {
+      reject(err)
     }
-  })
 
-  if (fs.pathExistsSync(sourceDir + '/static')) {
-    fs.copySync(sourceDir + '/static', 'dist')
+    Promise.all(files.map(async (filePath) => {
+      try {
+        const result = await readFile(filePath, 'utf8')
+        return new File(filePath, result)
+      } catch (e) {
+        reject(e)
+      }
+    }))
+      .then(result => {
+        console.log('Found following files:\n  - ' + result.map(f => f.src).join('\n  - '))
+
+        const pagePrefix = new RegExp(`^${sourceDir}/pages`)
+        const pages = []
+        const files = result.filter(file => {
+          if (pagePrefix.test(file.src)) {
+            pages.push(file)
+            return false
+          }
+          return true
+        })
+
+        resolve({ pages, files })
+      })
+      .catch(reject)
+  })
+})
+
+const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
+  try {
+    const parsedFiles = processFiles(files)
+    const parsedPages = processFiles(pages)
+    const globals = collectExports(parsedFiles)
+
+    resolve({ globals, pages: parsedPages })
+  } catch (e) {
+    reject(e)
+  }
+})
+
+const renderPages = ({ globals, pages }) => Promise.all(pages.map(fileObj => new Promise((resolve, reject) => {
+  try {
+    const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
+    const formattedMarkup = renderMarkup(markup)
+
+    writeOutput(fileObj.src, formattedMarkup)
+
+    resolve()
+  } catch (e) {
+    reject(new Error(`${e.message} (${fileObj.src})`))
+  }
+})))
+
+const copyStaticFiles = async (sourceDir) => {
+  if (await fs.pathExists(sourceDir + '/static')) {
+    await fs.copy(sourceDir + '/static', 'dist')
   }
 }
+
+const compile = (sourceDir) => new Promise((resolve, reject) => {
+  fs.emptyDir('dist')
+    .then(() => readFiles(sourceDir))
+    .then(res => parseFiles(res))
+    .then(res => renderPages(res))
+    .then(() => copyStaticFiles(sourceDir))
+    .catch(console.error)
+})
 
 module.exports = compile

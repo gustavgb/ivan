@@ -1,3 +1,4 @@
+require('@babel/polyfill')
 const compile = require('./compile')
 const nodeWatch = require('node-watch')
 

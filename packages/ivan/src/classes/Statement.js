@@ -1,7 +1,9 @@
 class Statement {
-  constructor (indentation, lineContent, children) {
+  constructor (indentation, lineContent, parent, children = []) {
     this.indentation = indentation
     this.lineContent = lineContent
+    this.parent = parent
+    this.children = children
 
     if (lineContent !== 'root') {
       let body = null
@@ -30,8 +32,6 @@ class Statement {
     } else {
       this.isRoot = true
     }
-
-    this.children = children
   }
 
   getWithoutFirstCommand () {
@@ -41,7 +41,11 @@ class Statement {
 
     const lineContent = this.commandArgs.slice(1).join(' ') + (this.body ? ':' + this.body : '')
 
-    return new Statement(this.indentation, lineContent, this.children)
+    return new Statement(this.indentation, lineContent, this.parent, this.children)
+  }
+
+  addChild (child) {
+    this.children.push(child)
   }
 }
 
