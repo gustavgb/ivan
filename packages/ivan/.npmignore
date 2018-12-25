@@ -1,3 +1,7 @@
 src
 
 tools
+
+.eslintignore
+
+.eslintrc
