@@ -10,6 +10,16 @@ class Import extends Component {
     this.type = 'import'
   }
 
+  renderRaw (indentation, globals) {
+    const component = globals.filter(a => a.name === this.componentName)[0]
+
+    if (component) {
+      return component.renderRaw(indentation, globals)
+    } else {
+      throw new Error(`Export ${this.componentName} not found`)
+    }
+  }
+
   render (globals, stylesheet, childBody, props) {
     const component = globals.filter(a => a.name === this.componentName)[0]
 

@@ -12,11 +12,15 @@ class Inject extends Component {
     this.type = 'component'
   }
 
+  renderRaw (indentation, globals) {
+    return this.children.map(child => child.renderRaw(indentation, globals)).join('\n')
+  }
+
   render (globals, stylesheet, childBody = '', props) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).join(' ')
 
-    let body = this.children.map(child => child.renderRaw(-2)).join('\n')
+    let body = this.children.map(child => child.renderRaw(0, globals)).join('\n')
 
     if (tag === 'style') {
       body = renderStylesheet(body)

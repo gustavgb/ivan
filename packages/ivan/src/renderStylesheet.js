@@ -9,6 +9,7 @@ const formatStylesheet = (stylesheet) => {
 
 const renderStylesheet = (stylesheet) => {
   const formattedStylesheet = formatStylesheet(stylesheet)
+
   const compiledStylesheet = sass.renderSync({
     data: formattedStylesheet,
     indentedSyntax: true,

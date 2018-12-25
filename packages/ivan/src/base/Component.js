@@ -51,24 +51,28 @@ class Component {
     return this.context.children.filter(a => !!a.name && !a.entry).reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
   }
 
-  renderRaw (indentationOffset = 0, childRenderer) {
-    const line = this.text
+  renderRaw (indentation, globals) {
+    const components = this.getContextIndex()
 
-    const indentation = []
-    for (let i = 0; i < this.indentation + indentationOffset; i++) {
-      indentation.push(' ')
+    if (components[this.text]) {
+      return components[this.text].renderRaw(indentation, globals)
     }
 
     let children = ''
     if (Array.isArray(this.children)) {
-      if (childRenderer) {
-        children = '\n' + this.children.map(child => childRenderer(child)).join('\n')
-      } else {
-        children = '\n' + this.children.map(child => child.renderRaw(indentationOffset)).join('\n')
-      }
+      children = '\n' + this.children.map(child => child.renderRaw(indentation + 2, globals)).join('\n')
     }
 
-    return `${indentation.join('')}${line}${children}`
+    if (isNaN(indentation)) {
+      indentation = this.indentation
+    }
+
+    const indentationText = []
+    for (let i = 0; i < indentation; i++) {
+      indentationText.push(' ')
+    }
+
+    return `${indentationText.join('')}${this.text}${children}`
   }
 
   render (globals, stylesheet, overrideBody, extraProps) {
