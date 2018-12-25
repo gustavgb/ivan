@@ -80,8 +80,8 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
 
 const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   try {
-    const parsedFiles = files.map(file => ({ src: file.src, result: parse(file.content) }))
-    const parsedPages = pages.map(file => ({ src: file.src, result: parse(file.content) }))
+    const parsedFiles = files.map(file => ({ src: file.src, result: parse(file.content, file.src) }))
+    const parsedPages = pages.map(file => ({ src: file.src, result: parse(file.content, file.src) }))
 
     const globals = collectExports(parsedFiles)
 

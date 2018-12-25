@@ -11,7 +11,7 @@ inject GlobalStyleExtension: style
     background-color: #efefde;
     margin: 0;
 
-inject Script type="application/javascript": script
+inject Script: script type="application/javascript"
   console.log('hello world!')
 
 page

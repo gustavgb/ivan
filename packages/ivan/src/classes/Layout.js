@@ -1,16 +1,26 @@
 import Component from './../base/Component'
 
 class Layout extends Component {
-  constructor (indentation, text, parent, context) {
-    super(indentation, text, parent, context)
+  constructor (options) {
+    super(options)
 
     this.element = this.bodyArgs[0]
     this.name = this.commandArgs[1]
     this.defaultProps = this.bodyArgs.slice(1)
   }
 
+  validate (components) {
+
+  }
+
+  renderRaw (indentation, globals) {
+    return this.children.map(child => child.renderRaw(indentation, globals)).join('\n')
+  }
+
   render (globals, stylesheet, childBody = '', props) {
     const components = this.getContextIndex()
+
+    this.validate(components)
 
     let body = this.children.map(child => child.element === '!children' ? child.element : child.render(globals, stylesheet)).join('').replace('!children', childBody)
 

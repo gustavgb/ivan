@@ -6,9 +6,10 @@ import Inject from './classes/Inject'
 import Component from './base/Component'
 
 class Line {
-  constructor (indentation, text) {
+  constructor (id, indentation, text) {
     this.indentation = indentation
     this.text = text
+    this.identifier = id
   }
 }
 
@@ -35,8 +36,9 @@ const components = [
   }
 ]
 
-const createComponent = (indentation, text, parent, context) => {
+const createComponent = (line, parent, context) => {
   let result
+  let { indentation, text, identifier } = line
 
   if (indentation === 0) {
     const lineContents = text.split(' ')
@@ -51,23 +53,39 @@ const createComponent = (indentation, text, parent, context) => {
 
     for (let i = 0; i < components.length; i++) {
       if (new RegExp(`^${components[i].keyword}( |$)`).test(text)) {
-        result = new components[i].Component(indentation, text, parent, context)
+        result = new components[i].Component({
+          identifier,
+          indentation,
+          text,
+          parent,
+          context
+        })
         result.isExport = isExport
       }
     }
+
+    if (!result) {
+      throw new Error(`Component initiator "${key}" is not valid. ${identifier}`)
+    }
   } else {
-    result = new Component(indentation, text, parent, context)
+    result = new Component({
+      identifier,
+      indentation,
+      text,
+      parent,
+      context
+    })
   }
 
   if (result instanceof Component) {
     return result
-  } else {
-    throw new Error('Parser must return object of type Component.')
+  } else if (result) {
+    throw new Error(`Parser must return object of type Component when using key "${text.split(' ')[0]}"`)
   }
 }
 
-const parse = (raw) => {
-  const lines = raw.split('\n').map(line => {
+const parse = (raw, src) => {
+  const lines = raw.split('\n').map((line, lineNumber) => {
     let indentation = 0
     for (let i = 0; i < line.length; i++) {
       if (line[i] === ' ') {
@@ -77,22 +95,24 @@ const parse = (raw) => {
       }
     }
 
-    return new Line(indentation, line.substr(indentation))
+    const identifier = `(${src}:${lineNumber + 1})`
+
+    return new Line(identifier, indentation, line.substr(indentation))
   }).filter(el => !!el.text)
 
-  let root = new Component(-1, 'root')
+  let root = new Component({ indentation: -1, text: 'root' })
   let head = root
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
 
     if (line.indentation > head.indentation) {
-      const s = createComponent(line.indentation, line.text, head, root)
+      const s = createComponent(line, head, root)
       head.addChild(s)
 
       head = s
     } else if (line.indentation === head.indentation) {
-      const s = createComponent(line.indentation, line.text, head.parent, root)
+      const s = createComponent(line, head.parent, root)
       head.parent.addChild(s)
 
       head = s
@@ -101,7 +121,7 @@ const parse = (raw) => {
         head = head.parent
       }
 
-      const s = createComponent(line.indentation, line.text, head.parent, root)
+      const s = createComponent(line, head.parent, root)
 
       head.parent.addChild(s)
       head = s

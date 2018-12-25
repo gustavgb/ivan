@@ -2,8 +2,8 @@ import shortId from 'shortid'
 import Component from './../base/Component'
 
 class Style extends Component {
-  constructor (indentation, text, parent, context) {
-    super(indentation, text, parent, context)
+  constructor (options) {
+    super(options)
 
     this.name = this.commandArgs[1]
     const className = this.name + shortId()

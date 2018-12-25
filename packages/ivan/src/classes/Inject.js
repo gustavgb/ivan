@@ -2,12 +2,20 @@ import Component from './../base/Component'
 import renderStylesheet from './../renderStylesheet'
 
 class Inject extends Component {
-  constructor (indentation, text, parent, context) {
-    super(indentation, text, parent, context)
+  constructor (options) {
+    super(options)
 
     this.name = this.commandArgs[1]
     this.element = this.bodyArgs[0]
     this.defaultProps = this.bodyArgs.slice(1)
+  }
+
+  validate () {
+    if (this.children.length === 0) {
+      throw new Error(`Invalid Inject component: "${this.text}". Inject components must have children. ${this.identifier}`)
+    } else if (this.commandArgs.length !== 2) {
+      throw new Error(`Invalid Inject component: "${this.text}". Found either too many or too few arguments. Usage: "inject Foo: bar [prop1[, prop2...]]" ${this.identifier}`)
+    }
   }
 
   renderRaw (indentation, globals) {
@@ -15,6 +23,8 @@ class Inject extends Component {
   }
 
   render (globals, stylesheet, childBody = '', props) {
+    this.validate()
+
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).join(' ')
 

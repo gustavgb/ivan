@@ -1,6 +1,7 @@
 class Component {
-  constructor (indentation, text, parent = null, context = null, children = []) {
+  constructor ({ identifier, indentation, text, parent = null, context = null, children = [] }) {
     this.indentation = indentation
+    this.identifier = identifier
     this.text = text
     this.parent = parent
     this.children = children
@@ -37,18 +38,22 @@ class Component {
     }
   }
 
-  getWithoutFirstCommand () {
-    const text = this.commandArgs.slice(1).join(' ') + (this.body ? ':' + this.body : '')
-
-    return new Component(this.indentation, text, this.parent, this.context, this.children)
-  }
-
   addChild (child) {
     this.children.push(child)
   }
 
   getContextIndex () {
     return this.context.children.filter(a => !!a.name && !a.entry).reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
+  }
+
+  validate (components) {
+    const isUpperCase = /^[A-Z][a-z0-9_-]{3,19}$/.test(this.text)
+
+    if (isUpperCase && !components[this.commandArgs[0]]) {
+      throw new Error(`Component "${this.commandArgs[0]}" is not defined. You might have forgotten to import the appropiate component the appropiate component. ${this.identifier}`)
+    } else if (this.body && this.children.length > 0) {
+      throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have both component body and children. Choose one or the other. ${this.identifier}`)
+    }
   }
 
   renderRaw (indentation, globals) {
@@ -76,12 +81,14 @@ class Component {
   }
 
   render (globals, stylesheet, overrideBody, extraProps) {
+    const components = this.getContextIndex()
+
+    this.validate(components)
+
     let body = ''
     const element = this.commandArgs[0]
     const props = this.commandArgs.slice(1).concat(extraProps)
     const bodyElement = this.bodyArgs[0]
-
-    const components = this.getContextIndex()
 
     if (overrideBody) {
       body = overrideBody

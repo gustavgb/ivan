@@ -2,8 +2,8 @@ import renderStylesheet from './../renderStylesheet'
 import Component from './../base/Component'
 
 class Page extends Component {
-  constructor (indentation, text, parent, context) {
-    super(indentation, text, parent, context)
+  constructor (options) {
+    super(options)
 
     this.isEntry = true
   }

@@ -13,8 +13,7 @@ inject GlobalStyle: style
     
   GlobalStyleExtension
 
-
-inject Script type="application/javascript": script
+inject Script: script type="application/javascript"
   console.log('hello world!')
 
 page
