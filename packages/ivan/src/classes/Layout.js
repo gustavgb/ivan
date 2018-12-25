@@ -7,8 +7,6 @@ class Layout extends Component {
     this.element = this.bodyArgs[0]
     this.name = this.commandArgs[1]
     this.defaultProps = this.bodyArgs.slice(1)
-
-    this.type = 'component'
   }
 
   render (globals, stylesheet, childBody = '', props) {

@@ -6,8 +6,6 @@ class Import extends Component {
 
     this.componentName = this.commandArgs[1]
     this.name = this.bodyArgs[0] || this.componentName
-
-    this.type = 'import'
   }
 
   renderRaw (indentation, globals) {

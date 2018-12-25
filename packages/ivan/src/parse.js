@@ -2,7 +2,6 @@ import Import from './classes/Import'
 import Style from './classes/Style'
 import Layout from './classes/Layout'
 import Page from './classes/Page'
-import Element from './classes/Element'
 import Inject from './classes/Inject'
 import Component from './base/Component'
 
@@ -10,6 +9,60 @@ class Line {
   constructor (indentation, text) {
     this.indentation = indentation
     this.text = text
+  }
+}
+
+const components = [
+  {
+    keyword: 'import',
+    Component: Import
+  },
+  {
+    keyword: 'inject',
+    Component: Inject
+  },
+  {
+    keyword: 'style',
+    Component: Style
+  },
+  {
+    keyword: 'layout',
+    Component: Layout
+  },
+  {
+    keyword: 'page',
+    Component: Page
+  }
+]
+
+const createComponent = (indentation, text, parent, context) => {
+  let result
+
+  if (indentation === 0) {
+    const lineContents = text.split(' ')
+    let key = lineContents[0]
+    let isExport = false
+
+    if (key === 'export') {
+      key = lineContents[1]
+      text = lineContents.slice(1).join(' ')
+      isExport = true
+    }
+
+    for (let i = 0; i < components.length; i++) {
+      if (new RegExp(`^${components[i].keyword}( |$)`).test(text)) {
+        result = new components[i].Component(indentation, text, parent, context)
+        result.isExport = isExport
+      }
+    }
+  } else {
+    result = new Component(indentation, text, parent, context)
+  }
+
+  if (result instanceof Component) {
+    return result
+  } else {
+    throw new Error('Parser must return object of type Component.')
   }
 }
 
@@ -56,72 +109,6 @@ const parse = (raw) => {
   }
 
   return root.children
-}
-
-const mapChild = (child) => new Element(
-  child.commandArgs[0],
-  child.commandArgs.slice(1),
-  child.body,
-  child.bodyArgs,
-  child.children.map(mapChild),
-  child
-)
-
-const components = [
-  {
-    keyword: 'import',
-    Component: Import
-  },
-  {
-    keyword: 'inject',
-    Component: Inject
-  },
-  {
-    keyword: 'style',
-    Component: Style
-  },
-  {
-    keyword: 'layout',
-    Component: Layout
-  },
-  {
-    keyword: 'page',
-    Component: Page
-  }
-]
-
-const createComponent = (indentation, text, parent, context) => {
-  let result
-
-  if (indentation === 0) {
-    const lineContents = text.split(' ')
-    let key = lineContents[0]
-    let isExport = false
-
-    if (key === 'export') {
-      key = lineContents[1]
-      text = lineContents.slice(1).join(' ')
-      isExport = true
-    }
-
-    for (let i = 0; i < components.length; i++) {
-      if (new RegExp(`^${components[i].keyword}( |$)`).test(text)) {
-        result = new components[i].Component(indentation, text, parent, context)
-        if (isExport) {
-          result.type = 'export'
-        }
-      }
-    }
-  } else {
-    result = new Component(indentation, text, parent, context)
-  }
-
-  if (result instanceof Component) {
-    return result
-  } else {
-    console.log(result, text)
-    throw new Error('Parser must return object of type Component.')
-  }
 }
 
 export default parse

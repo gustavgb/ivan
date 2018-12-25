@@ -5,7 +5,7 @@ class Page extends Component {
   constructor (indentation, text, parent, context) {
     super(indentation, text, parent, context)
 
-    this.entry = true
+    this.isEntry = true
   }
 
   render (globals) {

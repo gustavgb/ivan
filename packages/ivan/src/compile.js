@@ -80,8 +80,8 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
 
 const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   try {
-    const parsedFiles = files.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
-    const parsedPages = pages.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
+    const parsedFiles = files.map(file => ({ src: file.src, result: parse(file.content) }))
+    const parsedPages = pages.map(file => ({ src: file.src, result: parse(file.content) }))
 
     const globals = collectExports(parsedFiles)
 
@@ -93,7 +93,7 @@ const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
 
 const renderPages = ({ globals, pages }) => Promise.all(pages.map(fileObj => new Promise((resolve, reject) => {
   try {
-    const markup = fileObj.transpiledFile.filter(el => el.entry)[0].render(globals)
+    const markup = fileObj.result.filter(el => el.isEntry)[0].render(globals)
     const formattedMarkup = renderMarkup(markup)
 
     writeOutput(fileObj.src, formattedMarkup)

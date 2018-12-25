@@ -2,14 +2,17 @@ import LightText: Text
 import Footer
 import Main
 
-inject GlobalStyle: style
-  html *
-    box-sizing: border-box;
-
 inject GlobalStyleExtension: style
   body
     background-color: #efefde;
     margin: 0;
+
+inject GlobalStyle: style
+  html *
+    box-sizing: border-box;
+    
+  GlobalStyleExtension
+
 
 inject Script type="application/javascript": script
   console.log('hello world!')
@@ -17,7 +20,7 @@ inject Script type="application/javascript": script
 page
   head
     title:Gustav's website
-    GlobalStyle: GlobalStyleExtension
+    GlobalStyle
   body
     Script
     Main

@@ -1,5 +1,5 @@
 const collectExports = (files) => {
-  const exports = files.reduce((result, file) => result.concat(file.transpiledFile.filter(cmd => cmd.type === 'export')), [])
+  const exports = files.reduce((result, file) => result.concat(file.result.filter(cmd => cmd.isExport)), [])
 
   return exports
 }

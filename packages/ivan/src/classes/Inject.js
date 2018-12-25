@@ -8,8 +8,6 @@ class Inject extends Component {
     this.name = this.commandArgs[1]
     this.element = this.bodyArgs[0]
     this.defaultProps = this.bodyArgs.slice(1)
-
-    this.type = 'component'
   }
 
   renderRaw (indentation, globals) {

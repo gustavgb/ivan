@@ -10,8 +10,6 @@ class Style extends Component {
     this.element = this.bodyArgs[0]
     this.className = className
     this.defaultProps = this.bodyArgs.slice(1)
-
-    this.type = 'component'
   }
 
   renderRaw (indentation, globals) {
