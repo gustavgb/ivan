@@ -1,6 +1,6 @@
 {
   "name": "@gustavgb/ivan",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple templating language to create static websites",
   "main": "lib/index.js",
   "scripts": {
