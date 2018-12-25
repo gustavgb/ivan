@@ -10,11 +10,11 @@ class Import extends Component {
     this.type = 'import'
   }
 
-  render (childBody, props, globals, stylesheet) {
+  render (globals, stylesheet, childBody, props) {
     const component = globals.filter(a => a.name === this.componentName)[0]
 
     if (component) {
-      return component.render(childBody, props, globals, stylesheet)
+      return component.render(globals, stylesheet, childBody, props)
     } else {
       throw new Error(`Export ${this.componentName} not found`)
     }

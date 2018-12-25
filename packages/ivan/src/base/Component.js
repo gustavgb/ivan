@@ -71,17 +71,19 @@ class Component {
     return `${indentation.join('')}${line}${children}`
   }
 
-  render (globals, stylesheet) {
+  render (globals, stylesheet, overrideBody, extraProps) {
     let body = ''
     const element = this.commandArgs[0]
-    const props = this.commandArgs.slice(1)
+    const props = this.commandArgs.slice(1).concat(extraProps)
     const bodyElement = this.bodyArgs[0]
 
     const components = this.getContextIndex()
 
-    if (bodyElement) {
+    if (overrideBody) {
+      body = overrideBody
+    } else if (bodyElement) {
       if (element && components[bodyElement]) {
-        body = components[bodyElement].render('', props, globals, stylesheet)
+        body = components[bodyElement].render(globals, stylesheet, '', props)
       } else {
         body = this.body
           .replace(/\s{2,}/, (match) => match.replace(/\s/g, '&nbsp;'))
@@ -96,7 +98,7 @@ class Component {
     const component = components[element]
 
     if (component) {
-      return component.render(body, props, globals, stylesheet)
+      return component.render(globals, stylesheet, body, props)
     } else {
       const attrs = props.join(' ')
       const tag = element

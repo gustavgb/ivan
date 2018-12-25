@@ -12,7 +12,7 @@ class Inject extends Component {
     this.type = 'component'
   }
 
-  render (childBody = '', props, globals, stylesheet) {
+  render (globals, stylesheet, childBody = '', props) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).join(' ')
 

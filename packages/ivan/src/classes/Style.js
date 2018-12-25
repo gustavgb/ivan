@@ -30,7 +30,7 @@ class Style extends Component {
     return this.children.map(child => this.renderChild(child, parentIndentation - child.indentation, components, globals)).join('\n')
   }
 
-  render (childBody, props, globals, stylesheet) {
+  render (globals, stylesheet, childBody, props) {
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
 

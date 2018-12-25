@@ -11,7 +11,7 @@ class Layout extends Component {
     this.type = 'component'
   }
 
-  render (childBody = '', props, globals, stylesheet) {
+  render (globals, stylesheet, childBody = '', props) {
     const components = this.getContextIndex()
 
     let body = this.children.map(child => child.element === '!children' ? child.element : child.render(globals, stylesheet)).join('').replace('!children', childBody)
@@ -22,7 +22,7 @@ class Layout extends Component {
 
     const rootComponent = components[this.element]
     if (rootComponent) {
-      return rootComponent.render(body, [].concat(this.defaultProps).concat(props), globals, stylesheet)
+      return rootComponent.render(globals, stylesheet, body, [].concat(this.defaultProps).concat(props))
     }
 
     const tag = this.element
