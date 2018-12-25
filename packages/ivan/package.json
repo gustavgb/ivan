@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "babel src --out-dir lib",
-    "dev": "babel src --out-dir lib --watch"
+    "prepare": "node tools/build.js",
+    "dev": "node tools/watch.js"
   },
   "bin": {
     "ivan": "bin/ivan.js"
