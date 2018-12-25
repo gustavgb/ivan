@@ -9,18 +9,8 @@ import renderMarkup from './renderMarkup'
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
-const processFiles = (files) => files.map(file => {
-  try {
-    return { src: file.src, transpiledFile: parse(file.content) }
-  } catch (e) {
-    throw e
-    throw new Error(`${e.message} (${file.src})`)
-  }
-})
-
-const parseFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')
-
-const parseFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val, index, list) => {
+const getFileName = (name) => name.split('/').reduce((a, val) => val).replace('.ivan', '')
+const getFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val, index, list) => {
   if (index < list.length - 1) {
     return val
   } else {
@@ -30,8 +20,8 @@ const parseFileDir = (name) => name.split('pages/')[1].split('/').reduce((a, val
 
 const writeOutput = async (sourceFileName, content, extension = '.html') => {
   try {
-    let fileName = parseFileName(sourceFileName)
-    let fileDir = parseFileDir(sourceFileName)
+    let fileName = getFileName(sourceFileName)
+    let fileDir = getFileDir(sourceFileName)
     if (fileDir.length > 0) fileDir += '/'
 
     if (fileName !== 'index') {
@@ -90,8 +80,8 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
 
 const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   try {
-    const parsedFiles = processFiles(files)
-    const parsedPages = processFiles(pages)
+    const parsedFiles = files.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
+    const parsedPages = pages.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
     const globals = collectExports(parsedFiles)
 
     resolve({ globals, pages: parsedPages })

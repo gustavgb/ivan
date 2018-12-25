@@ -4,4 +4,4 @@ const collectExports = (files) => {
   return exports
 }
 
-module.exports = collectExports
+export default collectExports

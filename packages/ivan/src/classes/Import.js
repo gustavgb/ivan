@@ -7,4 +7,4 @@ class Import {
   }
 }
 
-module.exports = Import
+export default Import

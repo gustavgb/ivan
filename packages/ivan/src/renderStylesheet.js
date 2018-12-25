@@ -1,4 +1,4 @@
-const sass = require('node-sass')
+import sass from 'node-sass'
 
 const formatStylesheet = (stylesheet) => {
   return stylesheet
@@ -18,4 +18,4 @@ const renderStylesheet = (stylesheet) => {
   return compiledStylesheet.css.toString()
 }
 
-module.exports = renderStylesheet
+export default renderStylesheet

@@ -1,4 +1,4 @@
-const collectComponentIndex = require('./../collectComponents')
+import collectComponentIndex from './../collectComponents'
 
 class Layout {
   constructor (name, element, props, children) {
@@ -36,4 +36,4 @@ class Layout {
   }
 }
 
-module.exports = Layout
+export default Layout

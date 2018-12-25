@@ -1,4 +1,4 @@
-const prettier = require('prettier')
+import prettier from 'prettier'
 
 const renderMarkup = (markup) => {
   return prettier.format(markup, {
@@ -7,4 +7,4 @@ const renderMarkup = (markup) => {
   })
 }
 
-module.exports = renderMarkup
+export default renderMarkup

@@ -19,4 +19,4 @@ const collectComponents = (transpiledFile, globals) => {
   return Object.assign({}, importIndex, fileIndex)
 }
 
-module.exports = collectComponents
+export default collectComponents

@@ -1,5 +1,5 @@
-const collectComponentIndex = require('./../collectComponents')
-const renderStylesheet = require('./../renderStylesheet')
+import renderStylesheet from './../renderStylesheet'
+import collectComponentIndex from './../collectComponents'
 
 class Page {
   constructor (children) {
@@ -28,4 +28,4 @@ class Page {
   }
 }
 
-module.exports = Page
+export default Page

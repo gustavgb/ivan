@@ -49,4 +49,4 @@ class Statement {
   }
 }
 
-module.exports = Statement
+export default Statement

@@ -1,4 +1,4 @@
-const renderStylesheet = require('./../renderStylesheet')
+import renderStylesheet from './../renderStylesheet'
 
 class Inject {
   constructor (name, element, defaultProps = [], children) {
@@ -27,4 +27,4 @@ class Inject {
   }
 }
 
-module.exports = Inject
+export default Inject

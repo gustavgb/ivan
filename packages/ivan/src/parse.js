@@ -5,11 +5,13 @@ import Layout from './classes/Layout'
 import Page from './classes/Page'
 import Element from './classes/Element'
 import Inject from './classes/Inject'
+import Component from './classes/Component'
 
 class Line {
   constructor (indentation, content) {
     this.indentation = indentation
     this.content = content
+    this.parent = null
   }
 }
 
@@ -66,6 +68,19 @@ const mapChild = (child) => new Element(
   child.children.map(mapChild),
   child
 )
+
+const createComponent = (line, parent) => {
+  let result
+
+  if (line.indentation === 0) {
+
+  } else {
+    line.parent = parent
+    result = line
+  }
+
+  return result
+}
 
 const handleCommand = (statement) => {
   const commandArgs = statement.commandArgs
@@ -139,4 +154,4 @@ const parse = (file) => {
   return transpile(fileContents)
 }
 
-module.exports = parse
+export default parse

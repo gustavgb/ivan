@@ -70,4 +70,4 @@ class Element {
   }
 }
 
-module.exports = Element
+export default Element

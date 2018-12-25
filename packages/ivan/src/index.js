@@ -1,6 +1,6 @@
-require('@babel/polyfill')
-const compile = require('./compile')
-const nodeWatch = require('node-watch')
+import '@babel/polyfill'
+import compile from './compile'
+import nodeWatch from 'node-watch'
 
 const compileWithTime = (sourceDir) => {
   const begin = Date.now()

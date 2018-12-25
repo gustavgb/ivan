@@ -1,5 +1,5 @@
-const shortId = require('shortid')
-const collectComponentIndex = require('./../collectComponents')
+import shortId from 'shortid'
+import collectComponentIndex from './../collectComponents'
 
 class Style {
   constructor (name, element, defaultProps = [], children) {
@@ -49,4 +49,4 @@ class Style {
   }
 }
 
-module.exports = Style
+export default Style
