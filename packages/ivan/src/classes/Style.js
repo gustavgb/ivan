@@ -1,32 +1,33 @@
 import shortId from 'shortid'
-import collectComponentIndex from './../collectComponents'
+import Component from './../base/Component'
 
-class Style {
-  constructor (name, element, defaultProps = [], children) {
-    const className = name + shortId()
+class Style extends Component {
+  constructor (indentation, text, parent, context) {
+    super(indentation, text, parent, context)
 
-    this.name = name
-    this.element = element
+    this.name = this.commandArgs[1]
+    const className = this.name + shortId()
+    this.element = this.bodyArgs[0]
     this.className = className
-    this.defaultProps = defaultProps
-
-    this.children = children
+    this.defaultProps = this.bodyArgs.slice(1)
 
     this.type = 'component'
   }
 
   renderChild (child, indentationOffset, components, globals) {
-    if (components[child.element] instanceof Style) {
-      return components[child.element].renderStyles(globals, child.statement.indentation + indentationOffset)
+    const element = child.commandArgs[0]
+
+    if (components[element] instanceof Style) {
+      return components[element].renderStyles(globals, child.indentation + indentationOffset)
     } else {
       return child.renderRaw(indentationOffset, (grandchild) => this.renderChild(grandchild, indentationOffset, components, globals))
     }
   }
 
   renderStyles (globals, parentIndentation = 0) {
-    const components = collectComponentIndex(this.file, globals)
+    const components = this.getContextIndex()
 
-    return this.children.map(child => this.renderChild(child, parentIndentation - child.statement.indentation, components, globals)).join('\n')
+    return this.children.map(child => this.renderChild(child, parentIndentation - child.indentation, components, globals)).join('\n')
   }
 
   render (childBody, props, globals, stylesheet) {

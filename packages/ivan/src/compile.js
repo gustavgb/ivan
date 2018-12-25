@@ -82,6 +82,7 @@ const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   try {
     const parsedFiles = files.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
     const parsedPages = pages.map(file => ({ src: file.src, transpiledFile: parse(file.content) }))
+
     const globals = collectExports(parsedFiles)
 
     resolve({ globals, pages: parsedPages })
@@ -99,7 +100,7 @@ const renderPages = ({ globals, pages }) => Promise.all(pages.map(fileObj => new
 
     resolve()
   } catch (e) {
-    reject(new Error(`${e.message} (${fileObj.src})`))
+    reject(e)
   }
 })))
 

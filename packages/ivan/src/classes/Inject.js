@@ -1,12 +1,13 @@
+import Component from './../base/Component'
 import renderStylesheet from './../renderStylesheet'
 
-class Inject {
-  constructor (name, element, defaultProps = [], children) {
-    this.name = name
-    this.element = element
-    this.defaultProps = defaultProps
+class Inject extends Component {
+  constructor (indentation, text, parent, context) {
+    super(indentation, text, parent, context)
 
-    this.children = children
+    this.name = this.commandArgs[1]
+    this.element = this.bodyArgs[0]
+    this.defaultProps = this.bodyArgs.slice(1)
 
     this.type = 'component'
   }

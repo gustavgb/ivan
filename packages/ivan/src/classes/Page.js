@@ -1,18 +1,17 @@
 import renderStylesheet from './../renderStylesheet'
-import collectComponentIndex from './../collectComponents'
+import Component from './../base/Component'
 
-class Page {
-  constructor (children) {
-    this.children = children
-    this.file = null
+class Page extends Component {
+  constructor (indentation, text, parent, context) {
+    super(indentation, text, parent, context)
+
     this.entry = true
   }
 
   render (globals) {
     const styleindex = {}
-    const components = collectComponentIndex(this.file, globals)
 
-    let pageBody = this.children.map(child => child.render(components, globals, styleindex)).join('')
+    let pageBody = this.children.map(child => child.render(globals, styleindex)).join('')
 
     const stylesheet = Object.keys(styleindex).reduce((styles, key) => styles.concat([`.${key}\n${styleindex[key]}`]), []).join('\n')
 

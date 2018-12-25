@@ -1,20 +1,20 @@
-import collectComponentIndex from './../collectComponents'
+import Component from './../base/Component'
 
-class Layout {
-  constructor (name, element, props, children) {
-    this.element = element
-    this.name = name
-    this.defaultProps = props
-    this.children = children
-    this.file = null
+class Layout extends Component {
+  constructor (indentation, text, parent, context) {
+    super(indentation, text, parent, context)
+
+    this.element = this.bodyArgs[0]
+    this.name = this.commandArgs[1]
+    this.defaultProps = this.bodyArgs.slice(1)
 
     this.type = 'component'
   }
 
   render (childBody = '', props, globals, stylesheet) {
-    const components = collectComponentIndex(this.file, globals)
+    const components = this.getContextIndex()
 
-    let body = this.children.map(child => child.element === '!children' ? child.element : child.render(components, globals, stylesheet)).join('').replace('!children', childBody)
+    let body = this.children.map(child => child.element === '!children' ? child.element : child.render(globals, stylesheet)).join('').replace('!children', childBody)
 
     if ((!this.children || this.children.length === 0) && childBody) {
       body = childBody
