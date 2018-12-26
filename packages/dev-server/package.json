@@ -1,0 +1,18 @@
+{
+  "name": "@gustavgb/ivan-dev-server",
+  "version": "0.0.1",
+  "description": "A simple HTTP server for use when developing IVAN apps.",
+  "main": "index.js",
+  "bin": {
+    "ivan-dev-server": "bin/ivan-dev-server.js"
+  },
+  "keywords": [
+    "dev-server",
+    "templating",
+    "ivan",
+    "static",
+    "website"
+  ],
+  "author": "Gustav Burchardt",
+  "license": "MIT"
+}

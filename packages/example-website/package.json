@@ -6,11 +6,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "ivan watch -s src",
     "build": "ivan build -s src",
-    "start": "node tools/startDev.js"
+    "start": "ivan-dev-server --src src"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0",
-    "serve": "^10.1.1",
-    "@gustavgb/ivan": "*"
+    "@gustavgb/ivan": "*",
+    "@gustavgb/ivan-dev-server": "*"
   }
 }
