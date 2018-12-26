@@ -10,9 +10,9 @@ class Inject extends Component {
     this.defaultProps = this.bodyArgs.slice(1)
   }
 
-  validate () {
-    if (this.children.length === 0) {
-      throw new Error(`Invalid Inject component: "${this.text}". Inject components must have children. ${this.identifier}`)
+  validate (props, childBody) {
+    if (this.children.length === 0 && this.defaultProps.length === 0 && props.length === 0 && childBody.length === 0) {
+      throw new Error(`Invalid Inject component: "${this.text}". Useless, when no children or attributes present on component. ${this.identifier}`)
     } else if (this.commandArgs.length !== 2) {
       throw new Error(`Invalid Inject component: "${this.text}". Found either too many or too few arguments. Usage: "inject Foo: bar [prop1[, prop2...]]" ${this.identifier}`)
     }
@@ -23,7 +23,7 @@ class Inject extends Component {
   }
 
   render (globals, stylesheet, childBody = '', props) {
-    this.validate()
+    this.validate(props, childBody)
 
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).join(' ')

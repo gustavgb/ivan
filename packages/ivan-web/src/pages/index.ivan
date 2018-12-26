@@ -2,10 +2,14 @@ import DarkText: Text
 import Page
 import Title
 import BulletList
-import CodeBlock
+import Link
+
+inject Example1: script src="https://gist.github.com/gustavgb/4d74eca48d0e48b95412fe3a8c9314c9.js"
+inject Example2: script src="https://gist.github.com/gustavgb/0743dd5087e2e3fd2de98f75635f3d85.js"
 
 page
   Page
+    Link href="/getting-started": Get started
     Title: What is IVAN?
     Text
       : IVAN is a modern markup language for the web.
@@ -24,48 +28,6 @@ page
       li: Code injection. Write scripts and global styles within any file and render it as an element
     Title: What does it look like?
     Text: A simple IVAN page can look like this:
-    CodeBlock
-      p:style Main: div\n
-      p:  background-color: blue;\n
-      p:\n
-      p:style Text: p\n
-      p:  color: white;\n
-      p:\n
-      p:page\n
-      p:  head\n
-      p:    title: Gustav's website\n
-      p:  body\n
-      p:    Main id="main"\n
-      p:      Text: I'm some text\n
-      p:      Text: I'm some other text
+    Example1
     Text: And is compiled to:
-    CodeBlock
-      p:<!DOCTYPE html>\n
-      p:<html>\n
-      p:\n
-      p:<head>\n
-      p:  <title>Gustav's website</title>\n
-      p:  <style>\n
-      p:    .Mainxs3zk_G30B {\n
-      p:      background-color: lightblue;\n
-      p:    }\n
-      p:\n
-      p:    .Text9I5KnvXME_ {\n
-      p:      color: white;\n
-      p:    }\n
-      p:  </style>\n
-      p:</head>\n
-      p:\n
-      p:<body>\n
-      p:  <div id="main" class="Mainxs3zk_G30B">\n
-      p:    <p class="Text9I5KnvXME_">I'm some text</p>\n
-      p:    <p class="Text9I5KnvXME_">I'm some other text</p>\n
-      p:  </div>\n
-      p:</body>\n
-      p:\n
-      p:</html>
-    Title: Get started
-    Text
-      :Why wait? Get started using IVAN today! Go to the 
-      a href="/getting-started":getting starting page
-      :.
+    Example2

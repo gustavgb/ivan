@@ -14,5 +14,8 @@
     "website"
   ],
   "author": "Gustav Burchardt",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^10.1.1"
+  }
 }

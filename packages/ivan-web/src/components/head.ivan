@@ -11,6 +11,14 @@ inject GlobalStyle: style
 
   html
     font-size: 62.5%
+    
+  .gist
+    .gist-data
+      background-color: #efefef !important
+      padding: 10px 0 !important
+  
+    .highlight
+      background-color: #efefed !important
 
 export layout Head: head
   title: Ivan: A minimalist markup language for the web
