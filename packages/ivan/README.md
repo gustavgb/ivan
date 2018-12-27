@@ -1,14 +1,14 @@
 # ivan
 
-A simple markup language that compiles to static HTML, CSS and JS
+A simple markup language that compiles to static HTML, CSS and JS. Read more at [the website](https://ivan.gustavgb.com).
 
 ## Use from command line
 
-`ivan build [flags] --src path/to/src`
+`ivan build --src path/to/src`
 
 or
 
-`ivan watch [flags] --src path/to/src`
+`ivan watch --src path/to/src`
 
 or
 
