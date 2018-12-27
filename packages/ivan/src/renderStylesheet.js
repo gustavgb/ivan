@@ -8,6 +8,10 @@ const formatStylesheet = (stylesheet) => {
 }
 
 const renderStylesheet = (stylesheet) => {
+  if (!stylesheet) {
+    return ''
+  }
+
   const formattedStylesheet = formatStylesheet(stylesheet)
 
   const compiledStylesheet = sass.renderSync({

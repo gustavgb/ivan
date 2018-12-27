@@ -57,5 +57,5 @@ export layout Top: Wrapper
   Menu
     MenuItem href="/": Home
     MenuItem href="/getting-started": Getting started
-    MenuItem href="/docs": Docs
+    MenuItem href="/contribute": Contribution
   Line

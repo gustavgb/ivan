@@ -1,8 +1,40 @@
 import DarkText: Text
 import Page
 import Title
+import Code
+import SectionHeader
+
+inject Example1: script src="https://gist.github.com/gustavgb/6b2c061731490468f7605ab30c47182c.js"
+inject Example1Compiled: script src="https://gist.github.com/gustavgb/fc124eb07bd3cff73dd1d06ebf68a82e.js"
 
 page
   Page
-    Title: Getting started
-    Text: Coming soon
+    Title: Getting started (work in progress)
+    Text: The first thing you want to do, is to install the package using either npm or yarn:
+    Code: npm install @gustavgb/ivan | yarn add @gustavgb/ivan
+    Text: To use IVAN from the commandline, run:
+    Code: ivan build --src path/to/src
+    Text: Good job! We're now able to compile IVAN code. Next, we'll explore a simple example.
+    SectionHeader: A simple example
+    Text: A simple index.ivan can look like this:
+    Example1
+    Text
+      : A few things are going on. First of all we introduce the first component, 
+      i: page
+      :, which needs to be included in every page file (more on this later). The page component is effectively the root of the webpage.
+      : Everything on the website is rendered because it's a child of the page component. Each page can only have one page component.
+    Text
+      : Next we notice that the page component has two direct children. These are
+      i: head
+      : and
+      i: body
+      :. Notice that a page component can have any number of children. But these children are not chosen randomly.
+      : These are actually the <head> and <body> tags from the HTML language. As we dive into IVAN, you will notice that it is very similar to HTML.
+      : Hence, every IVAN page is compiled to an HTML file.
+    Text
+      i: body
+      : and
+      i: html
+      : also have children. Try to guess what these do. If you have written any HTML, you probably know the answer.
+    Text: Let's take a look at the compiled file.
+    Example1Compiled

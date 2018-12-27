@@ -14,11 +14,11 @@ inject GlobalStyle: style
     
   .gist
     .gist-data
-      background-color: #efefef !important
+      background-color: #eee !important
       padding: 10px 0 !important
   
     .highlight
-      background-color: #efefed !important
+      background-color: #eee !important
 
 export layout Head: head
   title: Ivan: A minimalist markup language for the web

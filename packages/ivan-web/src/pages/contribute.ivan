@@ -1,0 +1,9 @@
+import DarkText: Text
+import Page
+import Title
+
+page
+  Page
+    Title: How do I contribute to IVAN?
+    Text: As we speak, I haven't compiled a complete guide on how you can contribute. If you are interested, please hit me up on twitter, I'm @iamgustavgb. Also, I'm on Reddit with u/gustavgb.
+    Text: Looking forward to hearing from you!

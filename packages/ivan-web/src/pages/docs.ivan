@@ -1,8 +1,0 @@
-import DarkText: Text
-import Page
-import Title
-
-page
-  Page
-    Title: Documentation
-    Text: Coming soon

@@ -1,0 +1,6 @@
+page
+  head
+    title: My first IVAN site
+  body
+    h1: Welcome to my website!
+    p: Glad to have you here.
