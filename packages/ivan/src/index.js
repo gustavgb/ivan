@@ -4,24 +4,16 @@ import nodeWatch from 'node-watch'
 
 const compileWithTime = (sourceDir) => {
   const begin = Date.now()
-  compileCatchErrors(sourceDir)
+  compile(sourceDir)
     .then(() => {
       const delta = Date.now() - begin
 
       console.log('Compiled in ' + delta + 'ms')
-    })
-    .catch(console.log)
-}
 
-const compileCatchErrors = (sourceDir) => new Promise((resolve, reject) => {
-  try {
-    compile(sourceDir)
-    resolve()
-  } catch (e) {
-    console.log('\n')
-    reject(e)
-  }
-})
+      return null
+    })
+    .catch(console.error)
+}
 
 const main = (sourceDir, { watch = false }) => {
   let timeout = null
@@ -48,7 +40,7 @@ const main = (sourceDir, { watch = false }) => {
       }
     })
   } else {
-    compileCatchErrors(sourceDir).catch(console.log)
+    compileWithTime(sourceDir)
   }
 }
 

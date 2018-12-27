@@ -56,7 +56,7 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
         const result = await readFile(filePath, 'utf8')
         return new File(filePath, result)
       } catch (e) {
-        reject(e)
+        return reject(e)
       }
     }))
       .then(result => {
@@ -72,7 +72,7 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
           return true
         })
 
-        resolve({ pages, files })
+        return resolve({ pages, files })
       })
       .catch(reject)
   })
@@ -80,8 +80,9 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
 
 const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   try {
-    const parsedFiles = files.map(file => ({ src: file.src, result: parse(file.content, file.src) }))
-    const parsedPages = pages.map(file => ({ src: file.src, result: parse(file.content, file.src) }))
+    const mapper = file => ({ src: file.src, result: parse(file.content, file.src) })
+    const parsedFiles = files.map(mapper)
+    const parsedPages = pages.map(mapper)
 
     const globals = collectExports(parsedFiles)
 
@@ -107,7 +108,9 @@ const renderPages = ({ globals, pages }) => Promise.all(pages.map(fileObj => new
 const copyStaticFiles = async (sourceDir) => {
   if (await fs.pathExists(sourceDir + '/static')) {
     await fs.copy(sourceDir + '/static', 'dist')
+    return true
   }
+  return false
 }
 
 const compile = (sourceDir) => new Promise((resolve, reject) => {
@@ -116,7 +119,7 @@ const compile = (sourceDir) => new Promise((resolve, reject) => {
     .then(res => parseFiles(res))
     .then(res => renderPages(res))
     .then(() => copyStaticFiles(sourceDir))
-    .catch(console.error)
+    .catch(reject)
 })
 
-module.exports = compile
+export default compile
