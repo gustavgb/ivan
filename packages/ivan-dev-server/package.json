@@ -6,6 +6,10 @@
   "bin": {
     "ivan-dev-server": "bin/ivan-dev-server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustavgb/ivan.git"
+  },
   "keywords": [
     "dev-server",
     "templating",
@@ -15,6 +19,10 @@
   ],
   "author": "Gustav Burchardt",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gustavgb/ivan/issues"
+  },
+  "homepage": "https://github.com/gustavgb/ivan#readme",
   "dependencies": {
     "serve": "^10.1.1"
   }

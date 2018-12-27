@@ -1,6 +1,6 @@
 {
   "name": "@gustavgb/ivan",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple templating language to create static websites",
   "main": "lib/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/gustavgb/ivan/issues"
   },
-  "homepage": "https://github.com/gustavgb/ivan#readme",
+  "homepage": "https://ivan.gustavgb.com",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "fs-extra": "^7.0.1",
