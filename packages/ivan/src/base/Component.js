@@ -1,3 +1,5 @@
+import { isUpperCase } from '../utils'
+
 class Component {
   constructor ({ identifier, indentation, text, parent = null, context = null, children = [] }) {
     this.indentation = indentation
@@ -47,9 +49,7 @@ class Component {
   }
 
   validate (components) {
-    const isUpperCase = /^[A-Z][a-z0-9_-]{3,19}$/.test(this.text)
-
-    if (isUpperCase && !components[this.commandArgs[0]]) {
+    if (isUpperCase(this.text) && !components[this.commandArgs[0]]) {
       throw new Error(`Component "${this.commandArgs[0]}" is not defined. You might have forgotten to import the appropiate component the appropiate component. ${this.identifier}`)
     } else if (this.body && this.children.length > 0) {
       throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have both component body and children. Choose one or the other. ${this.identifier}`)

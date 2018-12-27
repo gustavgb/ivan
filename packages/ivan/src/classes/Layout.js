@@ -1,4 +1,5 @@
 import Component from './../base/Component'
+import { isUpperCase } from '../utils'
 
 class Layout extends Component {
   constructor (options) {
@@ -10,7 +11,9 @@ class Layout extends Component {
   }
 
   validate (components) {
-
+    if (!isUpperCase(this.name)) {
+      throw new Error(`Invalid layout component: "${this.text}". Name must start with uppercase letter, was "${this.name}". ${this.identifier}`)
+    }
   }
 
   renderRaw (indentation, globals) {

@@ -1,5 +1,6 @@
 import shortId from 'shortid'
 import Component from './../base/Component'
+import { isUpperCase } from '../utils'
 
 class Style extends Component {
   constructor (options) {
@@ -12,11 +13,19 @@ class Style extends Component {
     this.defaultProps = this.bodyArgs.slice(1)
   }
 
+  validate () {
+    if (!isUpperCase(this.name)) {
+      throw new Error(`Invalid style component: "${this.text}". Name must start with uppercase letter, was "${this.name}". ${this.identifier}`)
+    }
+  }
+
   renderRaw (indentation, globals) {
     return this.children.map(child => child.renderRaw(indentation, globals)).join('\n')
   }
 
   render (globals, stylesheet, childBody, props) {
+    this.validate()
+
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
 
