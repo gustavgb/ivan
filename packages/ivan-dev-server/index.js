@@ -3,10 +3,15 @@ const http = require('http')
 const handler = require('serve-handler')
 
 const startWatcher = (sourceDir) => {
-  compiler(sourceDir, { watch: true })
+  compiler({ src: sourceDir, watch: true })
 }
 
 module.exports = (sourceDir, port = 3000) => {
+  if (!sourceDir) {
+    console.error('Argument sourceDir must be provided.')
+    process.exit(1)
+  }
+
   const server = http.createServer((req, res) => {
     return handler(req, res, {
       public: 'dist'

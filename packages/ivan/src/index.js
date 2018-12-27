@@ -15,7 +15,7 @@ const compileWithTime = (sourceDir) => {
     .catch(console.error)
 }
 
-const main = (sourceDir, { watch = false }) => {
+const main = ({ src: sourceDir, watch = false }) => {
   let timeout = null
   let filesChanged = {}
 

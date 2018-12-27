@@ -12,14 +12,22 @@ const flags = process.argv.slice(3).join(' ').replace(/--/gi, '-').split('-').re
   }
 }, {})
 
-flags.src = flags.src || flags.s
-
-if (!flags.src) {
-  console.warn('Please provide entry source folder with the --src flag')
-  process.exit(1)
-}
-
+flags.src = flags.src || flags.s || 'src'
 const sourceDir = flags.src.replace(/\/$/gi, '')
-const watch = process.argv[2] === 'watch'
 
-run(sourceDir, { watch })
+switch (process.argv[2]) {
+  case 'build':
+    run({ src: sourceDir })
+    break
+  case 'watch':
+    run({ src: sourceDir, watch: true })
+    break
+  case 'help':
+  case '--help': {
+    console.log('Usage: ivan <command> [--src /path/to/src]\n\nValid commands are:\n  - build: Tells the compiler to build the source directory once.\n  - watch: Tells the compiler to build the source directory once immediately and then watch the directory for file changes.\n')
+    break
+  }
+  default:
+    console.error('Argument "' + process.argv[2] + '" is not valid. Use either "build" or "watch"')
+    process.exit(1)
+}

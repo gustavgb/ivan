@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "ivan watch -s src",
-    "build": "ivan build -s src",
     "start": "ivan-dev-server --src src"
   },
   "devDependencies": {

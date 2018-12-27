@@ -12,14 +12,16 @@ const flags = process.argv.slice(2).join(' ').replace(/--/gi, '-').split('-').re
   }
 }, {})
 
-flags.src = flags.src || flags.s
 flags.port = flags.port || flags.p
-
-if (!flags.src) {
-  console.warn('Please provide entry source folder with the --src flag')
-  process.exit(1)
-}
-
+flags.src = flags.src || flags.s || 'src'
 const sourceDir = flags.src.replace(/\/$/gi, '')
 
-compiler(sourceDir, flags.port)
+switch (process.argv[2]) {
+  case 'help':
+  case '--help': {
+    console.log('Usage: ivan-dev-server [--src /path/to/src]\n')
+    break
+  }
+  default:
+    compiler(sourceDir, flags.port)
+}

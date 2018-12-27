@@ -1,16 +1,35 @@
-# IVAN &middot; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![codebeat badge](https://codebeat.co/badges/6dea7e2f-d6cb-4bd8-9689-971f97e98f37)](https://codebeat.co/projects/github-com-gustavgb-ivan-master) [![npm version](https://badge.fury.io/js/%40gustavgb%2Fivan.svg)](https://badge.fury.io/js/%40gustavgb%2Fivan)
+# ivan
 
 A simple markup language that compiles to static HTML, CSS and JS
 
-## Installation
+## Use from command line
 
-`npm install --dev @gustavgb/ivan` or `yarn add -D @gustavgb/ivan`
+`ivan build [flags] --src path/to/src`
 
-## Usage
+or
 
-`ivan build [flags] -s path/to/src`
+`ivan watch [flags] --src path/to/src`
 
-Flags:
-* *--watch* start watching for file changes.
+or
 
-More info on [the website](https://ivan.gustavgb.com/getting-started).
+`ivan help`, which is equal to `ivan --help`
+
+In the first two cases, *--src* can be excluded, in which case the source defaults to "src" *(path/to/project/**src**)*.
+
+## Use with node
+
+```
+import 'ivan' from '@gustavgb/ivan'
+
+ivan(options)
+```
+
+Options are:
+
+* src: path to the source directory (equivalent to *--src*)
+
+* watch: boolean determing whether or not a file watcher starts after initial compilation (equivalent to *ivan watch*)
+
+## Further reading
+
+More info is coming soon on the website. Visit [ivan.gustavgb.com](https://ivan.gustavgb.com).
