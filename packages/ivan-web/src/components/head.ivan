@@ -11,17 +11,17 @@ inject GlobalStyle: style
 
   html
     font-size: 62.5%
-    
+
   .gist
     .gist-data
       background-color: #eee !important
       padding: 10px 0 !important
-  
+
     .highlight
       background-color: #eee !important
 
 export layout Head: head
   title: Ivan: A minimalist markup language for the web
   meta charset="utf-8"
-  link href="https://fonts.googleapis.com/css?family=Arimo|Roboto+Mono" rel="stylesheet"
+  link href="https://fonts.googleapis.com/css?family=Arimo|Inconsolata" rel="stylesheet"
   GlobalStyle

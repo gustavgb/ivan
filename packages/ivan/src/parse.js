@@ -85,7 +85,7 @@ const createComponent = (line, parent, context) => {
 }
 
 const parse = (raw, src) => {
-  const lines = raw.split('\n').map((line, lineNumber) => {
+  const lines = raw.replace(/\r\n/g, '\n').split('\n').map((line, lineNumber) => {
     let indentation = 0
     for (let i = 0; i < line.length; i++) {
       if (line[i] === ' ') {
@@ -97,7 +97,9 @@ const parse = (raw, src) => {
 
     const identifier = `(${src}:${lineNumber + 1})`
 
-    return new Line(identifier, indentation, line.substr(indentation))
+    const text = line.substr(indentation)
+
+    return new Line(identifier, indentation, text)
   }).filter(el => !!el.text)
 
   let root = new Component({ indentation: -1, text: 'root' })

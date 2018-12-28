@@ -16,22 +16,6 @@ style Line: hr
   float: left
   width: 300px
 
-style LogoText: h1
-  font-size: 4rem
-  text-transform: uppercase
-  font-family: Roboto Mono
-  margin: 0
-  color: black
-  display: inline
-
-style LogoByline: h4
-  font-size: 2rem
-  text-transform: uppercase
-  font-family: Roboto Mono
-  margin: 0
-  color: black
-  display: inline
-
 style Menu: div
   MixinClearfix
 
@@ -50,10 +34,28 @@ style MenuItem: a
   &:visited
     color: black
 
+style LogoImg: img src="ivan.png"
+  height: 3.8rem
+  float: left
+
+style LogoText: h1
+  font-size: 2rem
+  text-transform: uppercase
+  font-family: Inconsolata, monospace
+  color: black
+  float: left
+  margin: 1.8rem 2rem 0
+
+style Logo: div
+  MixinClearfix
+
+  margin-bottom: 2rem
+
+
 export layout Top: Wrapper
-  LogoText
-    :IVAN
-    LogoByline: A minimalist markup language
+  Logo
+    LogoImg
+    LogoText: A minimalist markup language
   Menu
     MenuItem href="/": Home
     MenuItem href="/getting-started": Getting started
