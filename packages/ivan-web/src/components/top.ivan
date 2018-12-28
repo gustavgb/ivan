@@ -34,7 +34,7 @@ style MenuItem: a
   &:visited
     color: black
 
-style LogoImg: img src="ivan.png"
+style LogoImg: img src="/ivan.png"
   height: 3.8rem
   float: left
 
