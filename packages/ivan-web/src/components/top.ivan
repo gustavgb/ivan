@@ -8,19 +8,15 @@ style Wrapper: div
   margin: 0 auto
   padding: 6rem 0 4rem
 
-style Line: hr
-  margin: 4rem 0 0
-  border-width: 0 0 0.25rem 0
-  border-style: solid
-  border-color: #ddd
-  float: left
-  width: 300px
-
 style Menu: div
   MixinClearfix
 
   margin: 10px 0 0
-  padding: 0
+  float: left
+  padding: 0 7rem 4rem 0
+  border-width: 0 0 0.25rem 0
+  border-style: solid
+  border-color: #ddd
 
 style MenuItem: a
   float: left
@@ -60,4 +56,3 @@ export layout Top: Wrapper
     MenuItem href="/": Home
     MenuItem href="/getting-started": Getting started
     MenuItem href="/contribute": Contribution
-  Line

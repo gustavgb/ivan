@@ -6,6 +6,7 @@ import SectionHeader
 
 inject Example1: script src="https://gist.github.com/gustavgb/6b2c061731490468f7605ab30c47182c.js"
 inject Example1Compiled: script src="https://gist.github.com/gustavgb/fc124eb07bd3cff73dd1d06ebf68a82e.js"
+inject Example2: script src="https://gist.github.com/gustavgb/4e11d8056abe5eb1d4dacb4c9f7b761d.js"
 
 page
   Page
@@ -32,9 +33,75 @@ page
       : These are actually the <head> and <body> tags from the HTML language. As we dive into IVAN, you will notice that it is very similar to HTML.
       : Hence, every IVAN page is compiled to an HTML file.
     Text
-      i: body
+      i: head
       : and
-      i: html
+      i: body
       : also have children. Try to guess what these do. If you have written any HTML, you probably know the answer.
     Text: Let's take a look at the compiled file.
     Example1Compiled
+    Text
+      : As you can see, there is a direct correlation between the keywords used in the source file and the tags that appear in the compiled file.
+      : Notice that the compiled file is automatically wrapped with <html> tags preceded with a !doctype declaration.
+    Text: In order to compile the file locally, I recommend using the following file structure:
+    Code
+      :src/\n
+      :├── pages/\n
+      :│   └── index.ivan\n
+      :├── static/\n
+      :└── components/\n
+    Text
+      : The source folder can be named anything you want. This can be specified, when compiling the source code, but the compiler defaults to "src", and that is what this guide will use.
+      : The source folder contains
+      i: all
+      : the files we want to compile. We refer to this scope as the
+      i: assembly
+      :.
+    Text
+      : The source folder must contain at least one folder in order for the compiler to work: pages. Inside pages, you can place the entry files, one for each url/route.
+      : The file structure inside this directory is mapped to the output directory, so that you can create routing patterns using the file structure inside this directory.
+      : Every entry file must contain a page component, which we introduced above. Save the example above as index.ivan inside the pages directory.
+    Text
+      : Optionally the source folder can include a folder called "static". This folder is not compiled, and every file inside it is copied to the output directory.
+      : This folder is useful for hosting images and/or adding a favicon.
+    Text
+      : The last folder is completely optional. In this case we choose to call it "components", because we will use it to contain reusable components, but any other name could have been chosen.
+      : In addition to the components folder, you can add any folder you like. Some examples could be a "mixins" folder, to contain style/inject mixins. More on this later.
+    SectionHeader: Compile your first IVAN project
+    Text
+      : When you have saved the example code to index.ivan, you are ready to compile the code.
+      : Standing at the root of your project, run (either though a global installation of IVAN or through package scripts):
+    Code: ivan build --src src
+    Text
+      : If, like in this case, the source folder is named "src", you can exclude the flag. The output directory is called "dist" and will be placed at the root of your project.
+      : Inside this folder, you should see one file called "index.html". This will be the compiled page.
+    Text: Optionally use "ivan watch" to watch for file changes.
+    Text
+      : In order to run the source code locally and view the result in your browser of choice, I recommend using 
+      a href="https://www.npmjs.com/package/@gustavgb/ivan-dev-server": ivan-dev-server
+      :, a small development tool I created to help speed things up during development.
+    SectionHeader: Adding styles to our application
+    Text
+      : Adding styles is very simple in IVAN. It is done through what we call
+      i: style components
+      :. Take a look:
+    Example2
+    Text
+      : We use the
+      i: style
+      : keyword to tell the compiler that we wish to define a style component. Every style component must have a name. Note that all component names are always uppercase first letter.
+    Text
+      : The component statement is divided by a colon, which separates the statement into the
+      i: command
+      : and the
+      i: body
+      :. The command includes the necessary information in order to define the component, such as the type of component and the name associated with the component.
+      : The body often includes information about which element the component renders. These elements are always regular HTML elements.
+      : As you can see from this example, it is possible to add default attributes to the component. Attributes can also be added, when consuming the component. More on this later.
+    Text
+      : Notice that style components define a local stylesheet, which is compiled according to the 
+      a href="http://sass-lang.com/documentation/file.INDENTED_SYNTAX.html": sass indented syntax
+      :.
+    Text: Save this file in the source folder, perhaps inside components/ and call it what you like. In IVAN, file names are only for the sake of the developer.
+    SectionHeader: Importing and exporting components
+    Text
+      i: Coming soon...
