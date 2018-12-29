@@ -5,6 +5,7 @@ export style Code: div
   font-size: 1.6rem
   border-bottom: 0.25rem solid #dfdfdf
   border-radius: 3px
+  margin: 1.6rem 0
 
   & > p
     padding: 0

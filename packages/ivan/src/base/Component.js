@@ -1,7 +1,8 @@
 import { isUpperCase } from '../utils'
+import marked from 'marked'
 
 class Component {
-  constructor ({ identifier, indentation, text, parent = null, context = null, children = [] }) {
+  constructor ({ identifier, indentation, text = '', parent = null, context = null, children = [] }) {
     this.indentation = indentation
     this.identifier = identifier
     this.text = text
@@ -56,6 +57,16 @@ class Component {
     }
   }
 
+  renderBody () {
+    return marked(
+      this.body
+        .replace(/\s{2,}/, (match) => match.replace(/\s/g, '&nbsp;'))
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\\n/g, '<br>')
+    ).replace(/^<p>/, '').replace(/<\/p>\n/, '\n')
+  }
+
   renderRaw (indentation, globals) {
     const components = this.getContextIndex()
 
@@ -96,11 +107,7 @@ class Component {
       if (element && components[bodyElement]) {
         body = components[bodyElement].render(globals, stylesheet, '', props)
       } else {
-        body = this.body
-          .replace(/\s{2,}/, (match) => match.replace(/\s/g, '&nbsp;'))
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/\\n/g, '<br>')
+        body = this.renderBody()
       }
     } else if (Array.isArray(this.children)) {
       body = this.children.map(child => child.render(globals, stylesheet)).join('')

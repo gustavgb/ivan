@@ -1,0 +1,21 @@
+import Title
+import SectionHeader
+import DarkText: Text
+import Code
+
+export style MarkdownWrapper: div
+  h1
+    Title
+  
+  h2
+    SectionHeader
+  
+  p
+    Text
+    
+    code
+      background-color: #eee
+      padding: 0.4rem
+
+  pre
+    Code

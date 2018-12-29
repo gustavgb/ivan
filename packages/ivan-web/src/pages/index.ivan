@@ -3,20 +3,13 @@ import Page
 import Title
 import BulletList
 import Link
-
-inject Example1: script src="https://gist.github.com/gustavgb/4d74eca48d0e48b95412fe3a8c9314c9.js"
-inject Example2: script src="https://gist.github.com/gustavgb/0743dd5087e2e3fd2de98f75635f3d85.js"
+import MarkdownWrapper
+import HomepageCode
 
 page
   Page
     Link href="/getting-started": Get started
     Title: What is IVAN?
-    Text
-      : IVAN is a modern markup language for the web.
-      : With IVAN you can create webpages with ease, while maintaining a structured workspace.
-      : IVAN supports many features that are found in large web frameworks such as React.
-      : But such frameworks require cumbersome compiling frameworks and transpilers.
-      : They are built with client side execution in mind and lacks the simplicity of vanilla web development.
     Text
       : IVAN is a declarative language and is build on the principles of simplicity reuseability.
       : Features include:
@@ -26,8 +19,4 @@ page
       li: Style components. Declare sass styling within any file and render it as an element
       li: Style mixins. Extend any style components using reuseable style snippets
       li: Code injection. Write scripts and global styles within any file and render it as an element
-    Title: What does it look like?
-    Text: A simple IVAN page can look like this:
-    Example1
-    Text: And is compiled to:
-    Example2
+    MarkdownWrapper: HomepageCode

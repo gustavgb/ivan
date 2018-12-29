@@ -4,6 +4,7 @@ import Layout from './classes/Layout'
 import Page from './classes/Page'
 import Inject from './classes/Inject'
 import Component from './base/Component'
+import Markdown from './classes/Markdown'
 
 class Line {
   constructor (id, indentation, text) {
@@ -85,6 +86,18 @@ const createComponent = (line, parent, context) => {
 }
 
 const parse = (raw, src) => {
+  if (/.md$/.test(src)) {
+    const component = new Markdown({
+      identifier: src,
+      indentation: 0,
+      children: raw
+    })
+
+    component.isExport = true
+
+    return [component]
+  }
+
   const lines = raw.replace(/\r\n/g, '\n').split('\n').map((line, lineNumber) => {
     let indentation = 0
     for (let i = 0; i < line.length; i++) {

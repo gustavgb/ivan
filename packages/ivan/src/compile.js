@@ -46,7 +46,7 @@ const readFiles = (sourceDir) => new Promise((resolve, reject) => {
     }
   }
 
-  glob(sourceDir + '/!(static)/**/*.ivan', (err, files) => {
+  glob(sourceDir + '/!(static)/**/*.+(ivan|md)', (err, files) => {
     if (err) {
       reject(err)
     }
