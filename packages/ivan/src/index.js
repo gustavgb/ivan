@@ -2,6 +2,37 @@ import '@babel/polyfill'
 import compile from './compile'
 import nodeWatch from 'node-watch'
 
+let watcher
+let filesChanged = {}
+let timeout = null
+
+const openWatcher = (sourceDir) => {
+  watcher = nodeWatch('./' + sourceDir, { recursive: true })
+
+  watcher.on('error', console.error)
+  watcher.on('change', (evt, fileName) => {
+    if (evt === 'remove') {
+      watcher.close()
+
+      openWatcher(sourceDir)
+    }
+
+    filesChanged[fileName] = true
+
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        timeout = null
+
+        console.log('\nFiles changed: \n  - ' + Object.keys(filesChanged).join('\n  - '))
+
+        filesChanged = {}
+
+        compileWithTime(sourceDir)
+      }, 300)
+    }
+  })
+}
+
 const compileWithTime = (sourceDir) => {
   const begin = Date.now()
   compile(sourceDir)
@@ -16,29 +47,12 @@ const compileWithTime = (sourceDir) => {
 }
 
 const main = ({ src: sourceDir, watch = false }) => {
-  let timeout = null
-  let filesChanged = {}
-
   if (watch) {
     console.log('Watching for file changes')
 
     compileWithTime(sourceDir)
 
-    nodeWatch('./' + sourceDir, { recursive: true }, (event, fileName) => {
-      filesChanged[fileName] = true
-
-      if (!timeout) {
-        timeout = setTimeout(() => {
-          timeout = null
-
-          console.log('\nFiles changed: \n  - ' + Object.keys(filesChanged).join('\n  - '))
-
-          filesChanged = {}
-
-          compileWithTime(sourceDir)
-        }, 300)
-      }
-    })
+    openWatcher(sourceDir)
   } else {
     compileWithTime(sourceDir)
   }
