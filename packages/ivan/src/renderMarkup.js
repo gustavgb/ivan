@@ -1,10 +1,7 @@
-import prettier from 'prettier'
+import { minify } from 'html-minifier'
 
 const renderMarkup = (markup) => {
-  return prettier.format(markup, {
-    parser: 'html',
-    htmlWhitespaceSensitivity: 'strict'
-  })
+  return minify(markup)
 }
 
 export default renderMarkup
