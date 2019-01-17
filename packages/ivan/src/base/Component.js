@@ -54,6 +54,8 @@ class Component {
       throw new Error(`Component "${this.commandArgs[0]}" is not defined. You might have forgotten to import the appropiate component the appropiate component. ${this.identifier}`)
     } else if (this.body && this.children.length > 0) {
       throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have both component body and children. Choose one or the other. ${this.identifier}`)
+    } else if (this.commandArgs[0] === '!children' && this.children.length > 0) {
+      throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have children/body. ${this.identifier}`)
     }
   }
 
@@ -101,7 +103,9 @@ class Component {
     const props = this.commandArgs.slice(1).concat(extraProps)
     const bodyElement = this.bodyArgs[0]
 
-    if (overrideBody) {
+    if (element === '!children') {
+      body = element
+    } else if (overrideBody) {
       body = overrideBody
     } else if (bodyElement) {
       if (element && components[bodyElement]) {
@@ -123,7 +127,7 @@ class Component {
 
       let markup
 
-      if (tag) {
+      if (tag && tag !== '!children') {
         if (body) {
           markup = `<${tag}${attrs ? ' ' + attrs : ''}>${body}</${tag}>`
         } else {
