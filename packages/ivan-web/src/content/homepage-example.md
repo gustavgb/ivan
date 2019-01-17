@@ -8,10 +8,10 @@ A simple IVAN page can look like this:
 
 ```
 style Main: div
-  background-color: blue;
+  background-color: blue
 
 style Text: p
-  color: white;
+  color: white
 
 page
   head
