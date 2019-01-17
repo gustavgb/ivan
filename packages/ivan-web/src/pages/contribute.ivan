@@ -5,9 +5,6 @@ import Title
 page
   Page
     Title: How do I contribute to IVAN?
-    Text
-      :All source code for this website and all IVAN packages can be found in the IVAN monorepo, 
-      a href="https://github.com/gustavgb/ivan":here
-      :.
-    Text: As we speak, I haven't compiled a complete guide on how you can contribute. If you are interested, please hit me up on twitter, I'm @iamgustavgb. Also, I'm on Reddit with u/gustavgb.
+    Text: All source code for this website and all IVAN packages can be found in the IVAN monorepo, [here](https://github.com/gustavgb/ivan).
+    Text: As we speak, I haven't compiled a complete guide on how you can contribute. If you are interested, please send me an email, [hello@gustavgb.com](mailto:hello@gustavgb.com).
     Text: Looking forward to hearing from you!
