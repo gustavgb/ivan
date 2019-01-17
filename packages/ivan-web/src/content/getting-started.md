@@ -106,6 +106,29 @@ Notice that style components define a local stylesheet, which is compiled accord
 
 Save this file in the source folder, perhaps inside components/ and call it whatever you like. In IVAN, file names are only for the sake of the developer.
 
+## Extending style components
+
+Let's assume that you had implemented a component called *TextBase* and wanted to write two descendants of this component called *TextLight* and *TextDark* respectively. You could use style extensions:
+
+```
+style TextBase
+  font-size: 1.6rem
+  margin: 0
+  line-height: 2.3rem
+  margin: 1.6rem 0
+  font-family: Arimo
+
+export style TextLight: p
+  color: white
+  TextBase
+
+export style TextLight: p
+  color: black
+  TextBase
+```
+
+Notice that *TextBase* does not associate itself with any element. Therefore *TextBase* cannot be rendered, but must be extended. If *TextBase* did associate itself with an element, the descendants' element (or lack of) would overwrite the original element.
+
 ## Importing and exporting components
 
 In order to use the component, let's export it. Add an export statement to the style declaration:
@@ -167,6 +190,52 @@ page
 ```
 
 Try to compile this and take a look at the result.
+
+## Injecting JS or global styles
+
+This is done though *inject components*:
+
+```
+inject MyInjectComponent: script type="text/javascript"
+  window.addEventListener('load', function onload () {
+    console.log('Loaded')
+  })
+```
+
+Inject components can be rendered and/or exported the same way as any other component.
+
+Adding global styles are similarly easy. Just declare a inject component with the `style` element:
+
+```
+inject MyGlobalStyle: style
+  body
+    background-color: white
+
+    & > *
+      box-sizing: border-box
+
+page
+  head
+    MyGlobalStyle
+```
+
+Note that the global style component must be rendered in order to work, even though there is not visible element.
+
+## Extending inject components
+
+Inject components can be extended:
+
+```
+inject MyInjectExtension: style
+  html
+    overflow: hidden
+
+inject MyGlobalStyle: style
+  body
+    background-color: white
+
+  MyInjectExtension
+```
 
 ## How about some markdown?
 

@@ -11,7 +11,7 @@ page
     Link href="/getting-started": Get started
     Title: What is IVAN?
     Text
-      : IVAN is a declarative language and is build on the principles of simplicity reuseability.
+      : IVAN is a declarative markup language for the web and is build on the principles of simplicity and reuseability.
       : Features include:
     BulletList
       li: Code reuseability using modules
@@ -20,3 +20,4 @@ page
       li: Style mixins. Extend any style components using reuseable style snippets
       li: Code injection. Write scripts and global styles within any file and render it as an element
     MarkdownWrapper: HomepageCode
+    Text: Head over to [getting started](/getting-started) to write your first IVAN code!
