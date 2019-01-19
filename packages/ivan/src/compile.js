@@ -92,18 +92,22 @@ const parseFiles = ({ pages, files }) => new Promise((resolve, reject) => {
   }
 })
 
-const renderPages = ({ globals, pages }) => Promise.all(pages.map(fileObj => new Promise((resolve, reject) => {
-  try {
-    const markup = fileObj.result.filter(el => el.isEntry)[0].render(globals)
-    const formattedMarkup = renderMarkup(markup)
+const renderPages = ({ globals, pages }) => {
+  const promises = pages.map(fileObj => new Promise((resolve, reject) => {
+    try {
+      const markup = fileObj.result.filter(el => el.isEntry)[0].render(globals)
+      const formattedMarkup = renderMarkup(markup)
 
-    writeOutput(fileObj.src, formattedMarkup)
+      writeOutput(fileObj.src, formattedMarkup)
 
-    resolve()
-  } catch (e) {
-    reject(e)
-  }
-})))
+      resolve()
+    } catch (e) {
+      reject(e)
+    }
+  }))
+
+  return Promise.all(promises)
+}
 
 const copyStaticFiles = async (sourceDir) => {
   if (await fs.pathExists(sourceDir + '/static')) {

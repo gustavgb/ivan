@@ -85,19 +85,19 @@ const createComponent = (line, parent, context) => {
   }
 }
 
-const parse = (raw, src) => {
-  if (/.md$/.test(src)) {
-    const component = new Markdown({
-      identifier: src,
-      indentation: 0,
-      children: raw
-    })
+const createMarkdownComponent = (raw, src) => {
+  const component = new Markdown({
+    identifier: src,
+    indentation: 0,
+    children: raw
+  })
 
-    component.isExport = true
+  component.isExport = true
 
-    return [component]
-  }
+  return [component]
+}
 
+const createLines = (raw, src) => {
   const lines = raw.replace(/\r\n/g, '\n').split('\n').map((line, lineNumber) => {
     let indentation = 0
     for (let i = 0; i < line.length; i++) {
@@ -114,6 +114,16 @@ const parse = (raw, src) => {
 
     return new Line(identifier, indentation, text)
   }).filter(el => !!el.text)
+
+  return lines
+}
+
+const parse = (raw, src) => {
+  if (/.md$/.test(src)) {
+    return createMarkdownComponent(raw, src)
+  }
+
+  const lines = createLines(raw, src)
 
   let root = new Component({ indentation: -1, text: 'root' })
   let head = root

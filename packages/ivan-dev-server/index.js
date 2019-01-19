@@ -24,6 +24,6 @@ module.exports = (sourceDir, port = 3000) => {
     }
 
     console.log(`Development server is listening on port ${port}\n`)
-    startWatcher(sourceDir)
+    return startWatcher(sourceDir)
   })
 }

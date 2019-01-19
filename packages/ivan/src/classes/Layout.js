@@ -10,7 +10,7 @@ class Layout extends Component {
     this.defaultProps = this.bodyArgs.slice(1)
   }
 
-  validate (components) {
+  validate () {
     if (!isUpperCase(this.name)) {
       throw new Error(`Invalid layout component: "${this.text}". Name must start with uppercase letter, was "${this.name}". ${this.identifier}`)
     }

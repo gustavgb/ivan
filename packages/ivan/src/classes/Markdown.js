@@ -1,7 +1,6 @@
 import Component from './../base/Component'
 import { isUpperCase } from '../utils'
 import marked from 'marked'
-import shortid from 'shortid'
 import fs from 'fs'
 
 class Markdown extends Component {
