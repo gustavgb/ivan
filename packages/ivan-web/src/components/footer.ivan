@@ -20,6 +20,4 @@ style FooterWrapper: footer
   MixinClearfix
 
 export layout Footer: FooterWrapper
-  Text: This website was written in IVAN 😉 Take a look at&nbsp;
-  Text
-    a href="https://github.com/gustavgb/ivan" target="_blank":Github
+  Text: This website was written in Ivan 😉 Take a look at [Github](https://github.com/gustavgb/ivan).

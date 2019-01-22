@@ -9,15 +9,22 @@ import HomepageCode
 page
   Page
     Link href="/getting-started": Get started
-    Title: What is IVAN?
-    Text
-      : IVAN is a declarative markup language for the web and is build on the principles of simplicity and reuseability.
-      : Features include:
+    Title: What?
+    Text: Ivan is a declarative markup language for the web and is build on the principles of simplicity and reuseability.
     BulletList
-      li: Code reuseability using modules
-      li: Render to HTML, CSS and JS as a static site
-      li: Style components. Declare sass styling within any file and render it as an element
-      li: Style mixins. Extend any style components using reuseable style snippets
+      li: Reuseability. Everything is a reusable component.
+      li: Simplicity. Host your site on a static file server.
+      li: Sass styling. Unleash the power of Sass.
       li: Code injection. Write scripts and global styles within any file and render it as an element
+      li: Flexibility. Extend any style component or code injection using reusable components
+    Title: Why?
+    Text
+      :The purpose of Ivan is the simplify web development. Ivan is an alternative to the cumbersome development workflows of modern web development.
+      :Ivan does not compete with templating languages such as Pug or component-based frameworks such as React.
+    Text
+      :Ivan focuses entirely on the development process of static sites and tries to improve this.
+      :The problem with vanilla HTML development is that maintaining more than one page is frustrating, as an update to the navigation bar requires the developer to make the same changes multiple time in order for it to take effect on all pages.
+    Text
+      :This is why Ivan is based entirely on reusable components. Declare your components once and use the multiple times. It's that simple.
     MarkdownWrapper: HomepageCode
-    Text: Head over to [getting started](/getting-started) to write your first IVAN code!
+    Text: Head over to [getting started](/getting-started) to write your first Ivan code!

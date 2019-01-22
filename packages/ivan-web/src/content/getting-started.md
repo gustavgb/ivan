@@ -20,7 +20,7 @@ OR
 ivan watch
 ```
 
-The CLI assumes that you have placed the source code within a folder simply named *src* at the project root. Otherwise, use the **--src** flag.
+The CLI assumes that you have placed the source code within a folder simply named *src* at the project root. Otherwise, use the **--src** flag. More options found at [npmjs.org](https://npmjs.org/package/@gustavgb/ivan).
 
 
 
@@ -45,19 +45,19 @@ A simple index.ivan can look like this:
 ```
 page
   head
-    title: My first IVAN site
+    title: My first Ivan site
   body
     h1: Welcome to my website!
     p: Glad to have you here.
 ```
 
-Notice the use of indentation to describe parent/children. The root (zero indentation) is important, as it determines the *component type*.
+Notice the use of indentation to describe parent/child relationships. The root (zero indentation) is important, as it determines the *component type*.
 
 Here we use a *page* component. It tells the compiler to look here first, when building the page. Therefore, you are only allowed to have one page component.
 
 The page component has children.
 
-If you have written any HTML, this example above should be rather simply, as IVAN relies on the same tag names as seen in HTML.
+If you have written any HTML, this example above should be rather simply, as Ivan relies on the same tag names as seen in HTML.
 
 ## Let's compile
 
@@ -67,13 +67,13 @@ Try to write the above example and save it to *src/pages/index.ivan*. Then, stan
 ivan build
 ```
 
-Try to take a look in the *dist* folder. You should find *index.html*, which looks like (or very similar to) this
+Try to take a look in the *dist* folder. You should find *index.html*, which looks like (or very similar to) this:
 
 ```
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My first IVAN site</title>
+    <title>My first Ivan site</title>
     <style></style>
   </head>
   <body>
@@ -89,7 +89,7 @@ In order to run the source code locally and view the result in your browser of c
 
 ## Adding styles to our application
 
-Adding styles is very simple in IVAN. It is done through what we call *style components*. Take a look:
+Adding styles is very simple in Ivan. It is done through what we call *style components*. Take a look:
 
 ```
 style MyStyleComponent: a href="http://foo.bar"
@@ -104,7 +104,7 @@ We use the *style* keyword to tell the compiler that we wish to define a style c
 
 Notice that style components define a local stylesheet, which is compiled according to the [sass indented syntax](http://sass-lang.com/documentation/file.INDENTED_SYNTAX.html).
 
-Save this file in the source folder, perhaps inside components/ and call it whatever you like. In IVAN, file names are only for the sake of the developer.
+Save this file in the source folder, perhaps inside components/ and call it whatever you like. In Ivan, file names are mostly for the sake of the developer.
 
 ## Extending style components
 
@@ -112,17 +112,16 @@ Let's assume that you had implemented a component called *TextBase* and wanted t
 
 ```
 style TextBase
+  font-family: Arimo
   font-size: 1.6rem
-  margin: 0
   line-height: 2.3rem
   margin: 1.6rem 0
-  font-family: Arimo
 
 export style TextLight: p
   color: white
   TextBase
 
-export style TextLight: p
+export style TextDark: p
   color: black
   TextBase
 ```
@@ -143,14 +142,14 @@ Then import it. Return to *index.ivan* and add
 import MyStyleComponent
 ```
 
-Then replace wrapped the content in this component:
+Then use this component to wrap the page content:
 
 ```
 import MyStyleComponent
 
 page
   head
-    title: My first IVAN site
+    title: My first Ivan site
   body
     MyStyleComponent
       h1: Welcome to my website!
@@ -180,7 +179,7 @@ import MyLayoutComponent
 
 page
   head
-    title: My first IVAN site
+    title: My first Ivan site
   body
     MyStyleComponent
       h1: Welcome to my website!
@@ -219,7 +218,7 @@ page
     MyGlobalStyle
 ```
 
-Note that the global style component must be rendered in order to work, even though there is not visible element.
+Note that the global style component must be rendered in order to work, even though there is no visible element.
 
 ## Extending inject components
 
@@ -237,6 +236,17 @@ inject MyGlobalStyle: style
   MyInjectExtension
 ```
 
+The result will be this:
+
+```
+inject MyGlobalStyle: style
+  body
+    background-color: white
+
+  html
+    overflow: hidden
+```
+
 ## How about some markdown?
 
 It's possible to simplify text using selectors from markdown, such as `*italic*` or `**bold**` or `[Link](url)`. For example you could highlight part of the layout component's body:
@@ -245,6 +255,8 @@ It's possible to simplify text using selectors from markdown, such as `*italic*`
 MyLayoutComponent
   :This is a reuseable component, and I **like** it!
 ```
+
+Possible selectors are code snippets, bold, italic, links and images.
 
 ## Markdown file support
 
@@ -259,12 +271,12 @@ name: FaqMarkdown
 
 # Frequently asked questions
 
-Why does IVAN rock?
+Why does Ivan rock?
 
 Simple. Because it makes your life easier.
 ```
 
-Notice the use of meta tags. Each markdown file *must* have a name property to let the compile know how to import it.
+Notice the use of meta tags. Each markdown file *must* have a name property to let the compiler know how to import it.
 
 Then import it using regular import statements.
 
@@ -280,6 +292,6 @@ You might want to wrap the markdown element in a style component that adds styli
 
 ## What's next?
 
-Right now I think I have reached a threshold for actually using and testing IVAN, but of course there are many more things to add. Do you have any ideas? Please let me know! Write an email to me at [hello@gustavgb.com](mailto:hello@gustavgb.com).
+Right now I think Ivan have reached a threshold for actually being usable and testable, but of course there are many more things to add. Do you have any ideas? Please let me know! Write an email to me at [hello@gustavgb.com](mailto:hello@gustavgb.com).
 
-Good luck with IVAN!
+Good luck with Ivan!

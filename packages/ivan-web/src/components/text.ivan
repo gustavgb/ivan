@@ -1,6 +1,5 @@
 style TextBase
   font-size: 1.6rem
-  margin: 0
   line-height: 2.3rem
   margin: 1.6rem 0
   font-family: Arimo

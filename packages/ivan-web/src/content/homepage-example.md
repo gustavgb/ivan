@@ -2,9 +2,9 @@
 name: HomepageCode
 ---
 
-## What does it look like?
+# How?
 
-A simple IVAN page can look like this:
+A simple Ivan page can look like this:
 
 ```
 style Main: div

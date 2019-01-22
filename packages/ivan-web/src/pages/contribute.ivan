@@ -4,7 +4,7 @@ import Title
 
 page
   Page
-    Title: How do I contribute to IVAN?
-    Text: All source code for this website and all IVAN packages can be found in the IVAN monorepo, [here](https://github.com/gustavgb/ivan).
+    Title: How do I contribute to Ivan?
+    Text: All source code for this website and all Ivan packages can be found in the Ivan monorepo, [here](https://github.com/gustavgb/ivan).
     Text: As we speak, I haven't compiled a complete guide on how you can contribute. If you are interested, please send me an email, [hello@gustavgb.com](mailto:hello@gustavgb.com).
     Text: Looking forward to hearing from you!
