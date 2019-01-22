@@ -10,9 +10,9 @@ page
   Page
     Link href="/getting-started": Get started
     Title: What?
-    Text: Ivan is a declarative markup language for the web and is build on the principles of simplicity and reuseability.
+    Text: Ivan is a declarative markup language for the web and is build on the principles of simplicity and reusability.
     BulletList
-      li: Reuseability. Everything is a reusable component.
+      li: Reusability. Everything is a reusable component.
       li: Simplicity. Host your site on a static file server.
       li: Sass styling. Unleash the power of Sass.
       li: Code injection. Write scripts and global styles within any file and render it as an element
