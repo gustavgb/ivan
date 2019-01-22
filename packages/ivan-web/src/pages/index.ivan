@@ -19,12 +19,12 @@ page
       li: Flexibility. Extend any style component or code injection using reusable components
     Title: Why?
     Text
-      :The purpose of Ivan is the simplify web development. Ivan is an alternative to the cumbersome development workflows of modern web development.
+      :The purpose of Ivan is the simplify web development. Ivan is an alternative to the cumbersome development workflows of modern web development frameworks.
       :Ivan does not compete with templating languages such as Pug or component-based frameworks such as React.
     Text
       :Ivan focuses entirely on the development process of static sites and tries to improve this.
       :The problem with vanilla HTML development is that maintaining more than one page is frustrating, as an update to the navigation bar requires the developer to make the same changes multiple time in order for it to take effect on all pages.
     Text
-      :This is why Ivan is based entirely on reusable components. Declare your components once and use the multiple times. It's that simple.
+      :This is why Ivan is based entirely on reusable components. Declare your components once and use them multiple times. It's that simple.
     MarkdownWrapper: HomepageCode
     Text: Head over to [getting started](/getting-started) to write your first Ivan code!
