@@ -10,11 +10,14 @@ inject GlobalStyleExtension: style
 inject GlobalStyle: style
   html *
     box-sizing: border-box;
-    
+
   GlobalStyleExtension
 
 inject Script: script type="application/javascript"
   console.log('hello world!')
+
+style Test: a
+  color: blue
 
 page
   head
@@ -29,3 +32,5 @@ page
         :Go to about me
     Footer
       p:Footer content
+    Test href="/apps/bananahunt" style="background-image: url(/assets/bananahunt.png)"
+    h1: Header

@@ -1,6 +1,6 @@
 import shortId from 'shortid'
 import Component from './../base/Component'
-import { isUpperCase } from '../utils'
+import { isUpperCase, isVoidElement } from '../utils'
 
 class Style extends Component {
   constructor (options) {
@@ -13,18 +13,22 @@ class Style extends Component {
     this.defaultProps = this.bodyArgs.slice(1)
   }
 
-  validate () {
+  validate (body) {
     if (!isUpperCase(this.name)) {
       throw new Error(`Invalid style component: "${this.text}". Name must start with uppercase letter, was "${this.name}". ${this.identifier}`)
+    } else if (isVoidElement(this.element) && body) {
+      throw new Error(`Invalid style component: "${this.text}". Is a void element and cannot have children/body. ${this.identifier}`)
     }
   }
 
   renderRaw (indentation, globals) {
+    this.validate()
+
     return this.children.map(child => child.renderRaw(indentation, globals)).join('\n')
   }
 
   render (globals, stylesheet, childBody, props) {
-    this.validate()
+    this.validate(childBody)
 
     const tag = this.element
     const attrs = [].concat(props).concat(this.defaultProps).concat([`class="${this.className}"`]).join(' ')
@@ -37,11 +41,11 @@ class Style extends Component {
       throw new Error('Style component (' + this.name + ') has no tag and therefore cannot be rendered.')
     }
 
-    if (childBody) {
+    if (!isVoidElement(this.element)) {
       return `<${tag}${attrs ? ' ' + attrs : ''}>${childBody}</${tag}>`
+    } else {
+      return `<${tag}${attrs ? ' ' + attrs : ''}>`
     }
-
-    return `<${tag}${attrs ? ' ' + attrs : ''} />`
   }
 }
 

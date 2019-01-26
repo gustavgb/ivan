@@ -1,4 +1,4 @@
-import { isUpperCase } from '../utils'
+import { isUpperCase, isVoidElement } from '../utils'
 import marked from 'marked'
 
 class Component {
@@ -49,13 +49,15 @@ class Component {
     return this.context.children.filter(a => !!a.name && !a.entry).reduce((acc, el) => Object.assign(acc, { [el.name]: el }), {})
   }
 
-  validate (components) {
+  validate (components, overrideBody) {
     if (isUpperCase(this.text) && !components[this.commandArgs[0]]) {
       throw new Error(`Component "${this.commandArgs[0]}" is not defined. You might have forgotten to import the appropiate component the appropiate component. ${this.identifier}`)
     } else if (this.body && this.children.length > 0) {
       throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have both component body and children. Choose one or the other. ${this.identifier}`)
     } else if (this.commandArgs[0] === '!children' && this.children.length > 0) {
       throw new Error(`Component "${this.commandArgs[0]}" is not valid. Cannot have children/body. ${this.identifier}`)
+    } else if (isVoidElement(this.commandArgs[0]) && (this.children.length > 0 || this.body || overrideBody)) {
+      throw new Error(`Component "${this.commandArgs[0]}" is a void element and cannot have children/body. ${this.identifier}`)
     }
   }
 
@@ -96,7 +98,7 @@ class Component {
   render (globals, stylesheet, overrideBody, extraProps) {
     const components = this.getContextIndex()
 
-    this.validate(components)
+    this.validate(components, overrideBody)
 
     let body = ''
     const element = this.commandArgs[0]
@@ -128,10 +130,10 @@ class Component {
       let markup
 
       if (tag && tag !== '!children') {
-        if (body) {
-          markup = `<${tag}${attrs ? ' ' + attrs : ''}>${body}</${tag}>`
+        if (isVoidElement(element)) {
+          markup = `<${tag}${attrs ? ' ' + attrs : ''}>`
         } else {
-          markup = `<${tag}${attrs ? ' ' + attrs : ''} />`
+          markup = `<${tag}${attrs ? ' ' + attrs : ''}>${body}</${tag}>`
         }
       } else {
         markup = body

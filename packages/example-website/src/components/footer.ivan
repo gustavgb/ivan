@@ -20,4 +20,4 @@ export layout Footer: FooterWrapper
   Text
     :Copyright 2018 Gustav B
   Text
-    a href="/": https://gustavgb.github.io
+    a href="/": gustavgb.github.io
