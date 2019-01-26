@@ -30,6 +30,7 @@ const writeOutput = async (sourceFileName, content, extension = '.html') => {
 
       console.log(`Saving ${fileDir}${fileName}/index${extension}`)
     } else {
+      await fs.emptyDir('dist/' + fileDir)
       await writeFile(`dist/${fileDir}${fileName}${extension}`, content, 'utf8')
       console.log(`Saving ${fileDir}${fileName}${extension}`)
     }

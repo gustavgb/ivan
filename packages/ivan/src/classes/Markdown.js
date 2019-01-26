@@ -1,7 +1,6 @@
 import Component from './../base/Component'
 import { isUpperCase } from '../utils'
 import marked from 'marked'
-import fs from 'fs'
 
 class Markdown extends Component {
   constructor (options) {
@@ -48,8 +47,6 @@ class Markdown extends Component {
     this.meta = meta
     this.content = marked(body)
     this.name = meta.name || null
-
-    fs.writeFileSync('dist/markdownexample.html', this.content, 'utf8')
   }
 
   validate (props, childBody) {
