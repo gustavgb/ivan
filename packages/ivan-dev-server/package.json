@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/gustavgb/ivan#readme",
   "dependencies": {
-    "serve": "^10.1.1"
+    "serve": "^10.1.2"
   }
 }
